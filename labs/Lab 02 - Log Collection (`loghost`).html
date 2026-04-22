@@ -1,0 +1,1185 @@
+
+				
+				<html>
+					<head>
+						<meta charset="UTF-8"/>
+						<meta name="viewport" content="width=device-width, initial-scale=1"/>
+						<style>.jsdraw--editButton {
+  display: inline-block;
+  opacity: 0;
+  overflow: hidden;
+  z-index: 1;
+  position: relative;
+  align-self: flex-end;
+  justify-self: right;
+  transition: opacity 0.2s ease;
+}
+
+.jsdraw--editButton.-show,
+.jsdraw--editButton:hover {
+  opacity: 0.9;
+  overflow: visible;
+}
+
+.jsdraw--editButton > button {
+  width: min-content;
+  max-height: 50px;
+  position: absolute;
+}</style><script>(() => {
+  // src/localization.ts
+  var defaultStrings = {
+    insertDrawing: "Insert Drawing",
+    insertDrawingInNewWindow: "Insert drawing in new window",
+    restoreFromAutosave: "Restore from autosaved drawing",
+    deleteAutosave: "Delete all autosaved drawings",
+    noSuchAutosaveExists: "No autosave exists",
+    discardChanges: "Discard changes",
+    defaultImageTitle: "Freehand Drawing",
+    edit: "Edit",
+    close: "Close",
+    saveAndClose: "Save and close",
+    overwriteExisting: "Overwrite existing",
+    saveAsNewDrawing: "Save as a new drawing",
+    clickBelowToContinue: "Done! Click below to continue.",
+    discardUnsavedChanges: "Discard unsaved changes?",
+    resumeEditing: "Resume editing",
+    saveAndResumeEditing: "Save and resume editing",
+    saveChanges: "Save changes",
+    exitInstructions: "All changes saved! Click below to exit.",
+    settingsPaneDescription: "Settings for the Freehand Drawing image editor.",
+    setting__disableFullScreen: "Dialog mode",
+    setting__disableFullScreenDescription: "Enabling this setting causes the editor to only partially fill the Joplin window.",
+    setting__autosaveIntervalSettingLabel: "Autosave interval (minutes)",
+    setting__autosaveIntervalSettingDescription: 'Adjusts how often a backup copy of the current drawing is created. The most recent autosave can be restored by searching for ":restore autosave" in the command palette (ctrl+shift+p or cmd+shift+p on MacOS) and clicking "Restore from autosaved drawing". If this setting is set to zero, autosaves are created every two minutes.',
+    setting__themeLabel: "Theme",
+    setting__toolbarTypeLabel: "Toolbar type",
+    setting__toolbarTypeDescription: "This setting switches between possible toolbar user interfaces for the image editor.",
+    setting__keyboardShortcuts: "Keyboard shortcuts",
+    toolbarTypeDefault: "Default",
+    toolbarTypeSidebar: "Sidebar",
+    toolbarTypeDropdown: "Dropdown",
+    styleMatchJoplin: "Match Joplin",
+    styleJsDrawLight: "Light",
+    styleJsDrawDark: "Dark",
+    images: "Images",
+    pdfs: "PDFs",
+    allFiles: "All Files",
+    loadLargePdf: (pageCount) => `A selected file is a large PDF (${pageCount} pages). Loading it may take some time and increase the size of the current drawing. Continue?`,
+    notAnEditableImage: (resourceId, resourceType) => `Resource ${resourceId} is not an editable image. Unable to edit resource of type ${resourceType}.`
+  };
+  var localizations = {
+    de: {
+      insertDrawing: "Zeichnung einf\xFCgen",
+      insertDrawingInNewWindow: "Zeichnung in neuem Fenster einf\xFCgen",
+      restoreFromAutosave: "Automatische Sicherung wiederherstellen",
+      deleteAutosave: "Alle automatischen Sicherungen l\xF6schen",
+      noSuchAutosaveExists: "Keine automatischen Sicherungen vorhanden",
+      discardChanges: "\xC4nderungen verwerfen",
+      defaultImageTitle: "Freihand-Zeichnen",
+      edit: "Bearbeiten",
+      close: "Schlie\xDFen",
+      saveAndClose: "Speichern und Schlie\xDFen",
+      overwriteExisting: "Existierende Zeichnung \xFCberschreiben",
+      saveAsNewDrawing: "Als neue Zeichnung speichern",
+      clickBelowToContinue: "Fertig! Unten klicken, um fortzufahen.",
+      discardUnsavedChanges: "Ungespeicherte \xC4nderungen verwerfen?",
+      resumeEditing: "Weiter bearbeiten",
+      saveAndResumeEditing: "Speichern und weiter bearbeiten",
+      saveChanges: "\xC4nderungen speichern",
+      exitInstructions: "Alle \xC4nderungen gespeichert! Unten klicken, um das Fenster zu schlie\xDFen.",
+      settingsPaneDescription: "Einstellungen f\xFCr Freihand-Zeichnen.",
+      setting__disableFullScreen: "Dialogmodus",
+      setting__disableFullScreenDescription: "Wenn diese Einstellung aktiviert ist, f\xFCllt der Editor das Joplin-Fenster nur teilweise aus.",
+      setting__autosaveIntervalSettingLabel: "Intervall f\xFCr die automatische Speicherung (Minuten)",
+      setting__autosaveIntervalSettingDescription: "Legt fest, wie oft eine Sicherungskopie der aktuellen Zeichnung erstellt wird. Die letzte automatische Speicherung kann wiederhergestellt werden, indem du in der Befehlspalette (Strg+Umschalt+P oder Cmd+Umschalt+P unter MacOS) nach \u201E:restore autosave\u201C suchst und auf \u201EAutomatische Sicherung wiederherstellen\u201C klickst. Wenn diese Einstellung auf Null gesetzt ist, werden alle zwei Minuten automatische Speichervorg\xE4nge durchgef\xFChrt.",
+      setting__themeLabel: "Design",
+      setting__toolbarTypeLabel: "Toolbar-Typ",
+      setting__toolbarTypeDescription: "Diese Einstellung wechselt zwischen den m\xF6glichen Benutzeroberfl\xE4chen der Symbolleiste f\xFCr den Bildeditor.",
+      setting__keyboardShortcuts: "Tastaturk\xFCrzel",
+      toolbarTypeDefault: "Standard",
+      toolbarTypeSidebar: "Sidebar",
+      toolbarTypeDropdown: "Dropdown-Men\xFC",
+      styleMatchJoplin: "wie Joplin",
+      styleJsDrawLight: "Hell",
+      styleJsDrawDark: "Dunkel",
+      images: "Bilder",
+      pdfs: "PDFs",
+      allFiles: "Alle Dateien",
+      loadLargePdf: (pageCount) => `Die ausgew\xE4hlte Datei ist eine gro\xDFe PDF-Datei (mit ${pageCount} Seiten). Das Laden kann einige Zeit dauern und die Gr\xF6\xDFe der aktuellen Zeichnung erh\xF6hen. Fortfahren?`,
+      notAnEditableImage: (resourceId, resourceType) => `Die Ressource ${resourceId} ist kein bearbeitbares Bild. Ressource vom Typ ${resourceType} kann nicht bearbeitet werden.`
+    },
+    en: defaultStrings,
+    es: {
+      insertDrawing: "A\xF1ada dibujo",
+      restoreFromAutosave: "Resturar al autoguardado",
+      deleteAutosave: "Borrar el autoguardado",
+      noSuchAutosaveExists: "No autoguardado existe",
+      discardChanges: "Descartar cambios",
+      defaultImageTitle: "Dibujo",
+      edit: "Editar",
+      close: "Cerrar",
+      saveAndClose: "Guardar y cerrar",
+      overwriteExisting: "Sobrescribir existente",
+      saveAsNewDrawing: "Guardar como dibujo nuevo",
+      clickBelowToContinue: "Guardado. Ponga \xABok\xBB para continuar.",
+      discardUnsavedChanges: "\xBFDescartar cambios no guardados?",
+      resumeEditing: "Continuar editando",
+      saveAndResumeEditing: "Guardar y continuar editando"
+    },
+    hr: {
+      insertDrawing: "Umetni crte\u017E",
+      insertDrawingInNewWindow: "Umetni crte\u017E u novom prozoru",
+      restoreFromAutosave: "Obnovi iz automatski spremljenog crte\u017Ea",
+      deleteAutosave: "Izbri\u0161i sve automatski spremljene crte\u017Ee",
+      noSuchAutosaveExists: "Ne postoji automatski spremljeni crte\u017E",
+      discardChanges: "Odbaci promjene",
+      defaultImageTitle: "Prostoru\u010Dni crte\u017E",
+      edit: "Uredi",
+      close: "Zatvori",
+      saveAndClose: "Spremi i zatvori",
+      overwriteExisting: "Prepi\u0161i postoje\u0107e",
+      saveAsNewDrawing: "Spremi kao novi crte\u017E",
+      clickBelowToContinue: "Gotovo! Klikni dolje za nastavak.",
+      discardUnsavedChanges: "Odbaciti nespremljene promjene?",
+      resumeEditing: "Nastavi ure\u0111ivati",
+      saveAndResumeEditing: "Spremi i nastavi ure\u0111ivati",
+      saveChanges: "Spremi promjene",
+      exitInstructions: "Sve promjene su spremljene! Klikni dolje za izlaz.",
+      settingsPaneDescription: "Postavke ure\u0111iva\u010Da crte\u017Ea.",
+      setting__disableFullScreen: "Modus dijaloga",
+      setting__disableFullScreenDescription: "Uklju\u010Divanjem ove postavke \u0107e ure\u0111iva\u010D ispuniti samo dio Joplinovog prozora.",
+      setting__autosaveIntervalSettingLabel: "Interval automatskog spremanja (minute)",
+      setting__autosaveIntervalSettingDescription: "Prilago\u0111ava u\u010Destalost stvaranja sigurnosnih kopija trenuta\u010Dnog crte\u017Ea. Najnoviji automatski spremljeni crte\u017E se mo\u017Ee obnoviti pretra\u017Eivanjem \u201E:restore autosave\u201D u paleti naredbi (ctrl+shift+p ili cmd+shift+p na MacOS-u) i klikom na \u201EObnovi iz automatski spremljenog crte\u017Ea\u201D. Ako je ova postavka postavljena na nulu, automatska spremanja se izvode svake dvije minute.",
+      setting__themeLabel: "Tema",
+      setting__toolbarTypeLabel: "Vrsta alatne trake",
+      setting__toolbarTypeDescription: "Ova postavka omogu\u0107uje prebacivanje izme\u0111u mogu\u0107ih korisni\u010Dkih su\u010Delja alatnih traka za ure\u0111iva\u010D slika.",
+      setting__keyboardShortcuts: "Tipkovni pre\u010Daci",
+      toolbarTypeDefault: "Zadano",
+      toolbarTypeSidebar: "Bo\u010Dna traka",
+      toolbarTypeDropdown: "Padaju\u0107i izbornik",
+      styleMatchJoplin: "Uskladi s Joplinom",
+      styleJsDrawLight: "Svijetla",
+      styleJsDrawDark: "Tamna",
+      images: "Slike",
+      pdfs: "PDF-ovi",
+      allFiles: "Sve datoteke",
+      loadLargePdf: (pageCount) => `Jedna odabrana datoteka je veliki PDF (${pageCount} stranica). U\u010Ditavanje mo\u017Ee potrajati i pove\u0107ati veli\u010Dinu trenuta\u010Dnog crte\u017Ea. \u017Deli\u0161 li nastaviti?`,
+      notAnEditableImage: (resourceId, resourceType) => `Resurs ${resourceId} nije slika koja se mo\u017Ee ure\u0111ivati. Nije mogu\u0107e urediti resurs vrste ${resourceType}.`
+    },
+    ro: {
+      insertDrawing: "Insereaz\u0103 un desen",
+      insertDrawingInNewWindow: "Insereaz\u0103 un desen \xEEntr-o fereastr\u0103 nou\u0103",
+      restoreFromAutosave: "Restaureaz\u0103 dintr-un desen salvat automat",
+      deleteAutosave: "\u0218terge toate desenele salvate automat",
+      noSuchAutosaveExists: "Nicio salvare automat\u0103 nu exist\u0103",
+      discardChanges: "Anuleaz\u0103 modific\u0103rile",
+      defaultImageTitle: "Desen liber",
+      edit: "Editeaz\u0103",
+      close: "\xCEnchide",
+      saveAndClose: "Salveaz\u0103 \u0219i \xEEnchide",
+      overwriteExisting: "Suprascrie existent",
+      saveAsNewDrawing: "Salveaz\u0103 ca desen nou",
+      clickBelowToContinue: "Gata! F\u0103 clic mai jos pentru a continua.",
+      discardUnsavedChanges: "Anulezi modific\u0103rile nesalvate?",
+      resumeEditing: "Continu\u0103 editarea",
+      saveAndResumeEditing: "Salveaz\u0103 \u0219i continu\u0103 editarea",
+      saveChanges: "Salveaz\u0103 modific\u0103rile",
+      exitInstructions: "Toate modific\u0103rile au fost salvate! F\u0103 clic mai jos pentru a ie\u0219i.",
+      settingsPaneDescription: "Set\u0103ri pentru editorul de imagine liber.",
+      setting__disableFullScreen: "Mod dialog",
+      setting__disableFullScreenDescription: "Activarea acestei op\u021Biuni face ca editorul s\u0103 acopere doar par\u021Bial fereastra Joplin.",
+      setting__autosaveIntervalSettingLabel: "Interval salvare automat\u0103 (minute)",
+      setting__autosaveIntervalSettingDescription: 'Ajusteaz\u0103 c\xE2t de des se face o copie de siguran\u021B\u0103 a desenului curent. Cea mai recent\u0103 versiune salvat\u0103 automat poate fi restaurat\u0103 c\u0103ut\xE2nd dup\u0103 ":restore autosave" \xEEn paleta de comenzi (Ctrl+Shift+P sau Cmd+Shift+P pe MacOS) \u0219i f\u0103c\xE2nd clic pe \u201ERestaureaz\u0103 dintr-un desen salvat automat\u201D. Dac\u0103 acest\u0103 setare este 0, salv\u0103rile automate sunt create la fiecare 2 minute.',
+      setting__themeLabel: "Tem\u0103",
+      setting__toolbarTypeLabel: "Tip bar\u0103 de instrumente",
+      setting__toolbarTypeDescription: "Aceast\u0103 setare comut\u0103 \xEEntre posibilele interfe\u021Be pentru editorul de imagine.",
+      setting__keyboardShortcuts: "Scurt\u0103turi de la tastatur\u0103",
+      toolbarTypeDefault: "Implicit",
+      toolbarTypeSidebar: "Bar\u0103 lateral\u0103",
+      toolbarTypeDropdown: "Casete derulante",
+      styleMatchJoplin: "La fel ca Joplin",
+      styleJsDrawLight: "Luminoas\u0103",
+      styleJsDrawDark: "\xCEntunecat\u0103",
+      images: "Imagini",
+      pdfs: "PDF-uri",
+      allFiles: "Toate fi\u0219ierele",
+      loadLargePdf: (pageCount) => `Un fi\u0219ier PDF selectat este un fi\u0219ier mare (${pageCount} de pagini). \xCEnc\u0103rcarea lui ar putea dura ceva timp \u0219i s\u0103 creasc\u0103 dimensiunea desenului curent. Continui?`,
+      notAnEditableImage: (resourceId, resourceType) => `Resursa ${resourceId} nu este o imagine editabil\u0103. Nu se poate edita resursa de tipul ${resourceType}.`
+    },
+    sk: {
+      insertDrawing: "Vlo\u017Ei\u0165 kresbu",
+      insertDrawingInNewWindow: "Vlo\u017Ei\u0165 kresbu do nov\xE9ho okna",
+      restoreFromAutosave: "Obnovi\u0165 z automaticky ulo\u017Eenej kresby",
+      deleteAutosave: "Vymaza\u0165 v\u0161etky automaticky ulo\u017Een\xE9 kresby",
+      noSuchAutosaveExists: "Neexistuj\xFA \u017Eiadne automaticky ulo\u017Een\xE9",
+      discardChanges: "Zru\u0161i\u0165 zmeny",
+      defaultImageTitle: "Kresba vo\u013Enou rukou",
+      edit: "Upravi\u0165",
+      close: "Zavrie\u0165",
+      saveAndClose: "Ulo\u017Ei\u0165 a zavrie\u0165",
+      overwriteExisting: "Prep\xEDsa\u0165 existuj\xFAcu",
+      saveAsNewDrawing: "Ulo\u017Ei\u0165 ako nov\xFA kresbu",
+      clickBelowToContinue: "Hotovo! Kliknite ni\u017E\u0161ie pre pokra\u010Dovanie.",
+      discardUnsavedChanges: "Zru\u0161i\u0165 neulo\u017Een\xE9 zmeny?",
+      resumeEditing: "Pokra\u010Dova\u0165 v \xFAprave",
+      saveAndResumeEditing: "Ulo\u017Ei\u0165 a pokra\u010Dova\u0165 v \xFAprav\xE1ch",
+      saveChanges: "Ulo\u017Ei\u0165 zmeny",
+      exitInstructions: "V\u0161etky zmeny boli ulo\u017Een\xE9! Kliknite ni\u017E\u0161ie pre ukon\u010Denie.",
+      settingsPaneDescription: "Nastavenia pre grafick\xFD editor Kresba vo\u013Enou rukou.",
+      setting__disableFullScreen: "Dial\xF3gov\xFD re\u017Eim",
+      setting__disableFullScreenDescription: "Aktiv\xE1cia tohto nastavenia sp\xF4sob\xED, \u017Ee editor vypln\xED okno Joplin len \u010Diasto\u010Dne.",
+      setting__autosaveIntervalSettingLabel: "Interval automatick\xE9ho ukladania (v min\xFAtach)",
+      setting__autosaveIntervalSettingDescription: "Nastav\xED, ako \u010Dasto sa vytv\xE1ra z\xE1lo\u017En\xE1 k\xF3pia aktu\xE1lnej kresby. Posledn\xE9 automatick\xE9 ulo\u017Eenie je mo\u017En\xE9 obnovi\u0165 vyh\u013Eadan\xEDm \u201E:restore autosave\u201C v palete pr\xEDkazov (ctrl+shift+p alebo cmd+shift+p v syst\xE9me MacOS) a kliknut\xEDm na \u201EObnovi\u0165 z automaticky ulo\u017Eenej kresby\u201C. Ak je toto nastavenie nastaven\xE9 na nulu, automatick\xE9 ulo\u017Eenia sa vytv\xE1raj\xFA ka\u017Ed\xE9 dve min\xFAty.",
+      setting__themeLabel: "T\xE9ma",
+      setting__toolbarTypeLabel: "Typ panela n\xE1strojov",
+      setting__toolbarTypeDescription: "Toto nastavenie prep\xEDna medzi mo\u017En\xFDmi pou\u017E\xEDvate\u013Esk\xFDmi rozhraniami panela n\xE1strojov pre grafick\xFD editor.",
+      setting__keyboardShortcuts: "Kl\xE1vesov\xE9 skratky",
+      toolbarTypeDefault: "Predvolen\xE9",
+      toolbarTypeSidebar: "Bo\u010Dn\xFD panel",
+      toolbarTypeDropdown: "Rozba\u013Eovacie menu",
+      styleMatchJoplin: "Rovnak\xE1 ako Joplin",
+      styleJsDrawLight: "Svetl\xE1",
+      styleJsDrawDark: "Tmav\xE1",
+      images: "Obr\xE1zky",
+      pdfs: "PDF s\xFAbory",
+      allFiles: "V\u0161etky s\xFAbory",
+      loadLargePdf: (pageCount) => `Vybran\xFD s\xFAbor je ve\u013Ek\xFD PDF s\xFAbor (${pageCount} str\xE1n). Jeho na\u010D\xEDtanie m\xF4\u017Ee trva\u0165 nejak\xFD \u010Das a zv\xFD\u0161i\u0165 ve\u013Ekos\u0165 aktu\xE1lnej kresby. Pokra\u010Dova\u0165?`,
+      notAnEditableImage: (resourceId, resourceType) => `Zdroj ${resourceId} nie je upravite\u013En\xFD obr\xE1zok. Nie je mo\u017En\xE9 upravi\u0165 zdroj typu ${resourceType}.`
+    }
+  };
+  var localization;
+  var supportedLanguages = [];
+  var setLocaleInternal = (supportedLocales) => {
+    const languages = [...supportedLocales];
+    for (let language of supportedLocales) {
+      language = language.replace("_", "-");
+      const localeSep = language.indexOf("-");
+      if (localeSep !== -1) {
+        languages.push(language.substring(0, localeSep));
+      }
+    }
+    for (const locale of languages) {
+      if (locale in localizations) {
+        localization = localizations[locale];
+        break;
+      }
+    }
+    supportedLanguages = languages;
+  };
+  var localizationSet = false;
+  var setLocale = (supportedLocales) => {
+    if (typeof supportedLocales === "string") {
+      supportedLocales = [supportedLocales];
+    }
+    setLocaleInternal(supportedLocales);
+    localizationSet = true;
+  };
+  setLocale(navigator.languages);
+  var localization_default = new Proxy(defaultStrings, {
+    get(_target, prop) {
+      if (!localizationSet) {
+        console.warn(
+          "Accessing language data without a localization set. The default Electron locale will be used."
+        );
+      }
+      const propAsKey = prop;
+      return localization?.[propAsKey] ?? defaultStrings[propAsKey];
+    }
+  });
+
+  // src/constants.ts
+  var markdownItContentScriptId = "jsdraw__markdownIt_editDrawingButton";
+
+  // src/contentScripts/utils/makeImageEditable.ts
+  var hasFocus = (element) => {
+    return element.contains(document.activeElement);
+  };
+  var onEdit = (image) => {
+    if (!(image instanceof HTMLElement)) {
+      image = image.currentTarget;
+    }
+    const message = `edit:${image.getAttribute("src")}`;
+    webviewApi.postMessage(markdownItContentScriptId, message).catch((err) => {
+      console.error("Error posting message!", err, "\nMessage: ", message);
+    });
+  };
+  var makeImageEditable = (image, editLabel) => {
+    if (image.classList.contains("js-draw--skip")) return;
+    if (image.ondblclick === onEdit) return;
+    image.ondblclick = onEdit;
+    const addEditButton = () => {
+      const editButtonContainer = document.createElement("span");
+      const editButton = document.createElement("button");
+      const updateLabel = (label) => {
+        editButton.textContent = `${label} \u{1F58A}\uFE0F`;
+      };
+      editButton.ariaDescribedByElements = [image];
+      editButtonContainer.classList.add("jsdraw--editButton");
+      editButtonContainer.appendChild(editButton);
+      updateLabel("Edit");
+      void (async () => {
+        updateLabel(await editLabel);
+      })();
+      image.insertAdjacentElement("afterend", editButtonContainer);
+      const pointerSet = /* @__PURE__ */ new Set();
+      const updateVisibleState = () => {
+        const show = pointerSet.size > 0 || editButton.querySelector(":hover, :focus") || hasFocus(editButton) || hasFocus(image);
+        if (show) {
+          editButtonContainer.classList.add("-show");
+        } else {
+          editButtonContainer.classList.remove("-show");
+        }
+      };
+      const updatePositioning = () => {
+        const containerBox = editButtonContainer.getBoundingClientRect();
+        const imageBox = image.getBoundingClientRect();
+        editButton.style.right = `${imageBox.right - containerBox.right}px`;
+        editButton.style.top = `${imageBox.top - containerBox.top}px`;
+      };
+      image.addEventListener("pointerenter", (event) => {
+        pointerSet.add(event.pointerId);
+        updateVisibleState();
+        updatePositioning();
+      });
+      image.addEventListener("pointerleave", (event) => {
+        pointerSet.delete(event.pointerId);
+        updateVisibleState();
+      });
+      for (const item of [image, editButton]) {
+        item.addEventListener("focus", () => {
+          updateVisibleState();
+          updatePositioning();
+        });
+        item.addEventListener("blur", () => {
+          requestAnimationFrame(() => {
+            updateVisibleState();
+          });
+        });
+      }
+      editButton.onclick = () => {
+        onEdit(image);
+      };
+    };
+    const isRichTextEditor = document.body.classList.contains("mce-content-body") || document.body.id === "tinymce";
+    const hasWebViewApi = typeof webviewApi !== "undefined";
+    const isHtmlNote = !document.body.querySelector("#rendered-md");
+    if (isRichTextEditor || isHtmlNote) {
+      image.style.cursor = "pointer";
+    } else if (hasWebViewApi) {
+      addEditButton();
+    }
+  };
+  var makeImageEditable_default = makeImageEditable;
+
+  // src/contentScripts/markdownIt-content.ts
+  var initLocalePromise = null;
+  var initLocale = async () => {
+    if (initLocalePromise) {
+      return initLocalePromise;
+    }
+    const promise = (async () => {
+      const languages = await webviewApi.postMessage(markdownItContentScriptId, "get-locale:");
+      if (!Array.isArray(languages)) {
+        throw new Error(
+          `Invalid locale request response. Not an array: ${JSON.stringify(languages)}`
+        );
+      }
+      setLocale(languages);
+    })();
+    initLocalePromise = promise;
+    return promise;
+  };
+  var processImages = () => {
+    const images = document.querySelectorAll('img[src*=".svg"]');
+    for (const image of images) {
+      if (image.src.match(/^https?:/) || !image.src.match(/[a-z0-9]{32}[.]svg([?]t=\d+)?$/)) {
+        continue;
+      }
+      makeImageEditable_default(
+        image,
+        (async () => {
+          await initLocale();
+          return localization_default.edit;
+        })()
+      );
+    }
+  };
+  document.addEventListener("joplin-noteDidUpdate", () => {
+    processImages();
+  });
+  processImages();
+})();
+</script></script><style>pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em;
+}
+
+code.hljs {
+  padding: 3px 5px;
+}
+
+/*
+
+Atom One Light by Daniel Gamage
+Original One Light Syntax theme from https://github.com/atom/one-light-syntax
+
+base:    #fafafa
+mono-1:  #383a42
+mono-2:  #686b77
+mono-3:  #a0a1a7
+hue-1:   #0184bb
+hue-2:   #4078f2
+hue-3:   #a626a4
+hue-4:   #50a14f
+hue-5:   #e45649
+hue-5-2: #c91243
+hue-6:   #986801
+hue-6-2: #c18401
+
+*/
+
+.hljs {
+  color: #383a42;
+  background: #fafafa;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #a0a1a7;
+  font-style: italic;
+}
+
+.hljs-doctag,
+.hljs-keyword,
+.hljs-formula {
+  color: #a626a4;
+}
+
+.hljs-section,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+  color: #e45649;
+}
+
+.hljs-literal {
+  color: #0184bb;
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta .hljs-string {
+  color: #50a14f;
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+  color: #986801;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+  color: #4078f2;
+}
+
+.hljs-built_in,
+.hljs-title.class_,
+.hljs-class .hljs-title {
+  color: #c18401;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-link {
+  text-decoration: underline;
+}</style>
+						<title>Lab 02 - Log Collection (`loghost`)</title>
+					</head>
+					<body>
+						<div class="exported-note"><div class="exported-note-title">Lab 02 - Log Collection (`loghost`)</div>
+
+<style>
+		/* https://necolas.github.io/normalize.css/ */
+		html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}
+		article,aside,footer,header,nav,section{display:block}h1{font-size:2em;margin:.67em 0}hr{box-sizing:content-box;height:0;overflow:visible}
+		pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent;-webkit-text-decoration-skip:objects}
+		b,strong{font-weight:bolder}small{font-size:80%}img{border-style:none}
+
+		body {
+			font-size: 15px;
+			color: #32373F;
+			word-wrap: break-word;
+			line-height: 1.6em;
+			background-color: #ffffff;
+			font-family: 'Avenir Next', 'Avenir', 'Arial', sans-serif;
+			padding-bottom: 0px;
+			padding-top: 0px;
+		}
+		kbd {
+			border: 1px solid rgb(220, 220, 220);
+			box-shadow: inset 0 -1px 0 rgb(220, 220, 220);
+			padding: 2px 4px;
+			border-radius: 3px;
+			background-color: rgb(243, 243, 243);
+		}
+
+		:root {
+			--scrollbar-size: 7px;
+		}
+
+		::-webkit-scrollbar {
+			width: var(--scrollbar-size);
+			height: var(--scrollbar-size);
+		}
+		::-webkit-scrollbar-thumb {
+			border-radius: calc(var(--scrollbar-size) / 2);
+		}
+		::-webkit-scrollbar-corner {
+			background: none;
+		}
+		::-webkit-scrollbar-track {
+			border: none;
+		}
+		::-webkit-scrollbar-thumb {
+			background: rgba(50, 55, 63, 0.54); 
+		}
+		::-webkit-scrollbar-track:hover {
+			background: rgba(0, 0, 0, 0.1); 
+		}
+		::-webkit-scrollbar-thumb:hover {
+			background: rgba(50, 55, 63, 0.63); 
+		}
+
+		
+
+		/* Remove top padding and margin from first child so that top of rendered text is aligned to top of text editor text */
+
+		#rendered-md > h1:first-child,
+		#rendered-md > h2:first-child,
+		#rendered-md > h3:first-child,
+		#rendered-md > h4:first-child,
+		#rendered-md > ul:first-child,
+		#rendered-md > ol:first-child,
+		#rendered-md > table:first-child,
+		#rendered-md > blockquote:first-child,
+		#rendered-md > img:first-child,
+		#rendered-md > p:first-child {
+			margin-top: 0;
+			padding-top: 0;
+		}
+		
+		p, h1, h2, h3, h4, h5, h6, ul, table {
+			margin-top: .6em;
+			margin-bottom: 1.35em;
+
+			/*
+				Adds support for RTL text in the note body. It automatically detects the direction using the content.
+				Issue: https://github.com/laurent22/joplin/issues/3991
+			*/
+			unicode-bidi: plaintext;
+		}
+
+		h1, h2, h3, h4, h5, h6, ul, table {
+			margin-bottom: 0.65em;
+		}
+
+		h1, h2, h3, h4, h5, h6 {
+			line-height: 1.5em;
+		}
+		h1 {
+			font-size: 1.5em;
+			font-weight: bold;
+			border-bottom: 1px solid #dddddd;
+			padding-bottom: .3em;
+		}
+		h2 {
+			font-size: 1.3em;
+			font-weight: bold;
+			padding-bottom: .1em; */
+		}
+		h3 {
+			font-size: 1.1em;
+			font-weight: bold;
+		}
+		h4, h5, h6 {
+			font-size: 1em;
+			font-weight: bold;
+		}
+
+		.exported-note-title {
+			font-size: 2em;
+			font-weight: bold;
+			margin-bottom: 0.8em;
+			line-height: 1.5em;
+			padding-bottom: .35em;
+			border-bottom: 1px solid #dddddd;
+		}
+
+		a {
+			color: #155BDA;
+		}
+		ul, ol {
+			padding-left: 0;
+			margin-left: 1.7em;
+		}
+		li {
+			margin-bottom: .4em;
+		}
+		li p {
+			margin-top: 0.2em;
+			margin-bottom: 0;
+		}
+
+		dt {
+			font-weight: bold;
+			margin-bottom: 0.25em;
+		}
+
+		dd {
+			margin-inline-start: 2.5em;
+			margin-bottom: 0.5em;
+		}
+
+		.resource-icon {
+			display: inline-block;
+			position: relative;
+			top: 0.3em;
+			text-decoration: none;
+			width: 1.2em;
+			height: 1.4em;
+			margin-right: 0.4em;
+			background-color:  #155BDA;
+		}
+    /* These icons are obtained from the wonderful ForkAwesome project by copying the src svgs 
+     * into the css classes below.
+     * svgs are obtained from https://github.com/ForkAwesome/Fork-Awesome/tree/master/src/icons/svg
+     * instead of the svg width, height property you must use a viewbox here, 0 0 1536 1792 is typically the actual size of the icon
+     * each line begins with the pre-amble -webkit-mask: url("data:image/svg+xml;utf8,
+     * and of course finishes with ");
+     * to prevent artifacts it is also necessary to include -webkit-mask-repeat: no-repeat;
+     * on the following line
+     * */
+		.fa-joplin {
+			/* Awesome Font file */
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M373.834 128C168.227 128 0 296.223 0 501.834v788.336C0 1495.778 168.227 1664 373.834 1664h788.336c205.608 0 373.83-168.222 373.83-373.83V501.834C1536 296.224 1367.778 128 1162.17 128zm397.222 205.431h417.424a7.132 7.132 0 0 1 7.132 7.133v132.552c0 4.461-3.619 8.073-8.077 8.073h-57.23c-24.168 0-43.768 19.338-44.284 43.374v2.377h-.017v136.191h-.053l-.466 509.375c-5.02 77.667-39.222 149.056-96.324 201.046-60.28 54.834-141.948 85.017-229.962 85.017-12.45 0-25.208-.61-37.907-1.785-92.157-8.682-181.494-48.601-251.662-112.438-71.99-65.517-117.147-150.03-127.164-238-11.226-98.763 23.42-192.783 95.045-257.937 81.99-74.637 198.185-101.768 316.613-75.704 5.574 1.227 9.55 6.282 9.55 11.997v199.52c-.199 2.625-1.481 6.599-8.183 2.896-.663-.365-1.194-.511-1.653-.531-21.987-10.587-45.159-17.57-68.559-19.916-.38-.04-.757-.124-1.138-.163-.537-.048-1.034-.033-1.556-.075-4.13-.354-8.183-.517-12.203-.58-.87-.011-1.771-.127-2.641-.127-.486 0-.951.05-1.437.057-1.464.011-2.886.115-4.33.163-2.76.102-5.497.211-8.182.448-.273.024-.547.07-.835.097-25.509 2.4-47.864 11.104-65.012 25.47-.954.802-1.974 1.53-2.9 2.36a1.34 1.34 0 0 1-.168.146c-23.96 21.8-34.881 53.872-30.726 90.316 4.62 40.737 26.94 81.156 62.841 113.823 35.908 32.67 80.335 52.977 125.113 57.186 35.118 3.36 66.547-3.919 89.899-20.461a97.255 97.255 0 0 0 9.365-7.501c2.925-2.661 5.569-5.5 8.086-8.416.3-.348.672-.673.975-1.024 8.253-9.864 14.222-21.067 17.996-33.148.639-2.034 1.051-4.148 1.564-6.227.381-1.563.81-3.106 1.112-4.693.555-2.784.923-5.632 1.253-8.49.086-.709.183-1.414.237-2.128.492-4.893.693-9.858.55-14.91h.013V521.623c-2.01-22.626-20.78-40.434-43.928-40.434h-57.23a8.071 8.071 0 0 1-8.077-8.073V340.564a7.132 7.132 0 0 1 7.136-7.133z'/></svg>");
+		}
+		.fa-file-image {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zm-128-448v320H256v-192l192-192 128 128 384-384zm-832-192c-106 0-192-86-192-192s86-192 192-192 192 86 192 192-86 192-192 192z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-pdf {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zm-514-593c25 20 53 38 84 56 42-5 81-7 117-7 67 0 152 8 177 49 7 10 13 28 2 52-1 1-2 3-3 4v1c-3 18-18 38-71 38-64 0-161-29-245-73-139 15-285 46-392 83-103 176-182 262-242 262-10 0-19-2-28-7l-24-12c-3-1-4-3-6-5-5-5-9-16-6-36 10-46 64-123 188-188 8-5 18-2 23 6 1 1 2 3 2 4 31-51 67-116 107-197 45-90 80-178 104-262-32-109-42-221-24-287 7-25 22-40 42-40h22c15 0 27 5 35 15 12 14 15 36 9 68-1 3-2 6-4 8 1 3 1 5 1 8v30c-1 63-2 123-14 192 35 105 87 190 146 238zm-576 411c30-14 73-57 137-158-75 58-122 124-137 158zm398-920c-10 28-10 76-2 132 3-16 5-31 7-44 2-17 5-31 7-43 1-3 2-5 4-8-1-1-1-3-2-5-1-18-7-29-13-36 0 2-1 3-1 4zm-124 661c88-35 186-63 284-81-10-8-20-15-29-23-49-43-93-103-127-176-19 61-47 126-83 197-15 28-30 56-45 83zm646-16c-5-5-31-24-140-24 49 18 94 28 124 28 9 0 14 0 18-1 0-1-1-2-2-3z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-word {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zM233 768v107h70l164 661h159l128-485c5-15 8-30 10-46 1-8 2-16 2-24h4l3 24c3 14 4 30 9 46l128 485h159l164-661h70V768h-300v107h90l-99 438c-4 16-6 33-7 46l-2 21h-4c0-6-2-14-3-21-3-13-5-30-9-46L825 768H711l-144 545c-4 16-5 33-8 46l-4 21h-4l-2-21c-1-13-3-30-7-46l-99-438h90V768H233z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-powerpoint {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zm-992-234v106h327v-106h-93v-167h137c43 0 82-2 118-15 90-31 146-124 146-233s-54-193-137-228c-38-15-84-19-130-19H416v107h92v555h-92zm353-280H650V882h120c35 0 62 6 83 18 36 21 56 62 56 115 0 56-20 99-62 120-21 10-47 15-78 15z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-excel {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zm-979-234v106h281v-106h-75l103-161c12-19 18-34 21-34h2c1 4 3 7 5 10 4 8 10 14 17 24l107 161h-76v106h291v-106h-68l-192-273 195-282h67V768H828v107h74l-103 159c-12 19-21 34-21 33h-2c-1-4-3-7-5-10-4-7-9-14-17-23L648 875h76V768H434v107h68l189 272-194 283h-68z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-audio {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zM620 850c12 5 20 17 20 30v544c0 13-8 25-20 30-4 1-8 2-12 2-8 0-16-3-23-9l-166-167H288c-18 0-32-14-32-32v-192c0-18 14-32 32-32h131l166-167c10-9 23-12 35-7zm417 689c19 0 37-8 50-24 83-102 129-231 129-363s-46-261-129-363c-22-28-63-32-90-10-28 23-32 63-9 91 65 80 100 178 100 282s-35 202-100 282c-23 28-19 68 9 90 12 10 26 15 40 15zm-211-148c17 0 34-7 47-20 56-60 87-137 87-219s-31-159-87-219c-24-26-65-27-91-3-25 24-27 65-2 91 33 36 52 82 52 131s-19 95-52 131c-25 26-23 67 2 91 13 11 29 17 44 17z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-video {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zM768 768c70 0 128 58 128 128v384c0 70-58 128-128 128H384c-70 0-128-58-128-128V896c0-70 58-128 128-128h384zm492 2c12 5 20 17 20 30v576c0 13-8 25-20 30-4 1-8 2-12 2-8 0-17-3-23-9l-265-266v-90l265-266c6-6 15-9 23-9 4 0 8 1 12 2z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-archive {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M640 384V256H512v128h128zm128 128V384H640v128h128zM640 640V512H512v128h128zm128 128V640H640v128h128zm700-388c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H768v128H640V128H128v1536h1280zM781 943c85 287 107 349 107 349 5 17 8 34 8 52 0 111-108 192-256 192s-256-81-256-192c0-18 3-35 8-52 0 0 21-62 120-396V768h128v128h79c29 0 54 19 62 47zm-141 465c71 0 128-29 128-64s-57-64-128-64-128 29-128 64 57 64 128 64z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-code {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zM480 768c11-14 31-17 45-6l51 38c14 11 17 31 6 45l-182 243 182 243c11 14 8 34-6 45l-51 38c-14 11-34 8-45-6l-226-301c-8-11-8-27 0-38zm802 301c8 11 8 27 0 38l-226 301c-11 14-31 17-45 6l-51-38c-14-11-17-31-6-45l182-243-182-243c-11-14-8-34 6-45l51-38c14-11 34-8 45 6zm-620 461c-18-3-29-20-26-37l138-831c3-18 20-29 37-26l63 10c18 3 29 20 26 37l-138 831c-3 18-20 29-37 26z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-alt, .fa-file-csv {
+      /* fork-awesome doesn't have csv so we use the text icon */
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zM384 800c0-18 14-32 32-32h704c18 0 32 14 32 32v64c0 18-14 32-32 32H416c-18 0-32-14-32-32v-64zm736 224c18 0 32 14 32 32v64c0 18-14 32-32 32H416c-18 0-32-14-32-32v-64c0-18 14-32 32-32h704zm0 256c18 0 32 14 32 32v64c0 18-14 32-32 32H416c-18 0-32-14-32-32v-64c0-18 14-32 32-32h704z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		blockquote {
+			border-left: 4px solid rgb(220, 220, 220);
+			padding-left: 1.2em;
+			margin-left: 0;
+			opacity: 0.7;
+		}
+
+		.jop-tinymce table,
+		table {
+			text-align: left;
+			border-collapse: collapse;
+			border: 1px solid rgb(220, 220, 220);
+			background-color: #ffffff;
+		}
+
+		.jop-tinymce table td, .jop-tinymce table th,
+		table td, th {
+			text-align: left;
+			padding: .5em 1em .5em 1em;
+			font-size: 15;
+			color: #32373F;
+			font-family: 'Avenir Next', 'Avenir', 'Arial', sans-serif;
+		}
+
+		.jop-tinymce table td,
+		table td {
+			border: 1px solid rgb(220, 220, 220);
+		}
+
+		.jop-tinymce table th,
+		table th {
+			border: 1px solid rgb(220, 220, 220);
+			border-bottom: 2px solid rgb(220, 220, 220);
+			background-color: rgb(247, 247, 247);
+		}
+
+		.jop-tinymce table tr:nth-child(even),
+		table:has(thead) tr:nth-child(even) {
+			background-color: rgb(247, 247, 247);
+		}
+
+		.jop-tinymce table tr:hover,
+		table tr:hover {
+			background-color: #e5e5e5;
+		}
+
+		hr {
+			border: none;
+			border-bottom: 2px solid #dddddd;
+		}
+		img {
+			max-width: 100%;
+			height: auto;
+		}
+		
+		.inline-code,
+		.mce-content-body code {
+			border: 1px solid rgb(220, 220, 220);
+			background-color: rgb(243, 243, 243);
+			padding-right: .2em;
+			padding-left: .2em;
+			border-radius: .25em;
+			color: rgb(0,0,0);
+			font-size: .9em;
+		}
+
+		.highlighted-keyword {
+			background-color: #F3B717;
+			color: black;
+		}
+
+		
+	.not-loaded-resource img {
+		width: 1.15em;
+		height: 1.15em;
+		background: white;
+		padding: 2px !important;
+		border-radius: 2px;
+		box-shadow: 0 1px 3px #000000aa;
+	}
+
+	a.not-loaded-resource img {
+		margin-right: .2em;
+	}
+
+	a.not-loaded-resource {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+
+
+		.md-checkbox input[type=checkbox]:checked {
+			opacity: 0.7;
+		}
+
+		.jop-tinymce ul.joplin-checklist .checked,
+		.md-checkbox .checkbox-label-checked {
+			opacity: 0.5;
+		}
+
+		.exported-note {
+			padding: 1em;
+		}
+
+		.joplin-editable .joplin-source {
+			display: none;
+		}
+
+		mark {
+			background: #F7D26E;
+			color: black;
+		}
+
+		/* =============================================== */
+		/* For TinyMCE */
+		/* =============================================== */
+
+		.mce-content-body {
+			/* Note: we give a bit more padding at the bottom, to allow scrolling past the end of the document */
+			padding: 5px 10px 10em 0;
+		}
+
+		/*
+		.mce-content-body code {
+			background-color: transparent;
+		}
+		*/
+
+		.mce-content-body [data-mce-selected=inline-boundary] {
+			background-color: transparent;
+		}
+
+		.mce-content-body .joplin-editable {
+			cursor: pointer !important;
+		}
+
+		.mce-content-body.mce-content-readonly {
+			opacity: 0.5;
+		}
+
+		/* We need that to make sure click events have the A has a target */
+		.katex a span {
+			pointer-events: none;
+		}
+
+		.media-player {
+			width: 100%;
+			margin-top: 10px;
+		}
+
+		.media-player.media-pdf {
+			min-height: 35rem;
+			width: 100%;
+			max-width: 1000px;
+			margin: 0;
+			border: 0;
+			display: block;
+		}
+
+		/* Clear the CODE style if the element is within a joplin-editable block */
+		.mce-content-body .joplin-editable code {
+			border: none;
+			background: none;
+			padding: 0;
+			color: inherit;
+			font-size: inherit;
+		}
+
+		/* To make code blocks horizontally scrollable */
+		/* https://github.com/laurent22/joplin/issues/5740 */
+		pre.hljs {
+			overflow-x: auto;
+		}
+
+		.joplin-table-wrapper{
+			overflow-x: auto;
+			overflow-y: hidden;
+		}
+
+		/* =============================================== */
+		/* For TinyMCE */
+		/* =============================================== */
+
+		@media print {
+			body {
+				height: auto !important;
+			}
+
+			pre {
+				white-space: pre-wrap;
+			}
+
+			.code, .inline-code {
+				border: 1px solid #CBCBCB;
+			}
+
+			#joplin-container-content {
+				/* The height of the content is set dynamically by JavaScript (in updateBodyHeight) to go
+				   around various issues related to scrolling. However when printing we don't want this
+				   fixed size as that would crop the content. So we set it to auto here. "important" is
+				   needed to override the style set by JavaScript at the element-level. */
+				height: auto !important;
+			}
+		}
+	
+
+				/*
+					FOR THE MARKDOWN EDITOR
+				*/
+
+				/* Remove the indentation from the checkboxes at the root of the document
+				   (otherwise they are too far right), but keep it for their children to allow
+				   nested lists. Make sure this value matches the UL margin. */
+
+				li.md-checkbox {
+					list-style-type: none;
+				}
+
+				li.md-checkbox input[type=checkbox] {
+					margin-left: -1.71em;
+					margin-right: 0.7em;
+					position: relative;
+					top: 1px;
+				}
+				
+				ul.joplin-checklist {
+					list-style:none;
+				}
+
+				/*
+					FOR THE RICH TEXT EDITOR
+				*/
+
+				ul.joplin-checklist li::before {
+					content:"\f14a";
+					font-family:"Font Awesome 5 Free";
+					background-size: 16px 16px;
+					pointer-events: all;
+					cursor: pointer;
+					width: 1em;
+					height: 1em;
+					margin-left: -1.3em;
+					position: absolute;
+					color: #32373F;
+				}
+
+				.joplin-checklist li:not(.checked)::before {
+					content:"\f0c8";
+				}
+
+				.abc-notation-block svg {
+					background-color: white;
+				}
+			
+.mermaid { width: 640px; }
+pre.mermaid[data-processed=true] { white-space: unset; }
+.mermaid-export-graph {
+					opacity: 0;
+					height: 0;
+					z-index: 1;
+					position: relative;
+				} 
+				.joplin-editable:hover .mermaid-export-graph,
+				.joplin-editable .mermaid-export-graph:has(:focus-visible) {
+					opacity: 1;
+				}
+				.mermaid-export-graph > button:hover {
+					background-color: #CBDAF1 !important;
+				}</style><div id="rendered-md"><p>In this lab, you are creating a <code class="inline-code">loghost</code> logging server using Rsyslog and MySQL for centralized log collection and storage. You should have completed the previous labs and have a working <code class="inline-code">Host-only</code> network with OPNsense router as the gateway. You will also configure OPNsense and other hosts to send logs to this system.</p>
+<p>You can refer to <code class="inline-code">rsyslog</code> documentation for basic configuration, operation, and troubleshooting at: <a data-from-md="" title="https://docs.rsyslog.com/doc/getting_started/beginner_tutorials/index.html" href="https://docs.rsyslog.com/doc/getting_started/beginner_tutorials/index.html">https://docs.rsyslog.com/doc/getting_started/beginner_tutorials/index.html</a>.</p>
+<h1 id="the-loghost-logging-server">The <code class="inline-code">loghost</code> Logging Server</h1>
+<p>Before you begin, start your <code class="inline-code">opnsense</code> router and log into the web UI and add the following DNS override:</p>
+<ul>
+<li>Navigate to: <code class="inline-code">Services &gt; Unbound DNS &gt; Overrides</code></li>
+<li>Add the following overrides:
+<ul>
+<li>Host: <code class="inline-code">loghost</code></li>
+<li>Domain: <code class="inline-code">home.arpa</code></li>
+<li>IP Address: Your Host-only network with host address <code class="inline-code">3</code>, for example: <code class="inline-code">192.168.60.3</code></li>
+<li>Any Description for your reference, for example, <code class="inline-code">The Loghost Server</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="vm-creation-and-os-installation">VM Creation and OS Installation</h2>
+<p>Create a new VM for Ubuntu Server and attach the NIC to your <code class="inline-code">Host-only Network</code>.</p>
+<ul>
+<li>The minimum resource requirements are <code class="inline-code">1</code> CPU (<code class="inline-code">2</code> CPU cores are recommended) and a minimum of <code class="inline-code">1024 MB</code> of RAM</li>
+</ul>
+<p>Install Ubuntu Server LTS (download the latest <code class="inline-code">.iso</code> image from <a data-from-md="" title="https://ubuntu.com/download/server" href="https://ubuntu.com/download/server">ubuntu.com</a>) with the following configuration:</p>
+<ul>
+<li>Configure your NIC with Manual Configuration:
+<ul>
+<li>Use the static IP address from your network with the host address set to <code class="inline-code">3</code> (for example, <code class="inline-code">192.168.60.3</code>)</li>
+<li>The <code class="inline-code">Gateway</code> and <code class="inline-code">Name Server</code> should be set to your OPNsense router IP Address you had created in the previous lab (for example, <code class="inline-code">192.168.60.1</code>)</li>
+<li>Use the search domain <code class="inline-code">home.arpa</code></li>
+</ul>
+</li>
+</ul>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABTIAAAOlCAYAAABe4xiVAAAQAElEQVR4nOzdB7wsZX038OecW+hc7kVAQQTU2LA3bCFRsSvWaMTeuzeWxBJTNDEmmpigacbYEt9osMQeu2Js2CtCLKAEFNR7uHRuO+/+lzOXZZjdmd2Z3Z3d8/3ez/O55+zszDxTdnf2d/4zszYBAAAAALTc2gQAAAAA0HKCTAAAAACg9QSZAAAAAEDrCTIBAAAAgNYTZAIAAAAArTcLQeZCAgAAAADGbTm1WFtCQmElAAAAALTX1EPOaQaIwksAAAAAmD1TCTUnHSZWnZ+QEwAAAACmp2pYObFQcxKB4UKN4QJNAAAAAJic5RGHVRley7iDwoUhHhdoAgAAAMB0DBtgLo8wnVrGFRBWCTCHCTMFmQAAAAAwPsMEk8sjjlfLOALCsoByUJhZ9jsAAAAAMD7LQ/xeFmg2GmY2GRSOEmBWDTjLHgcAAAAAhlelorLo54kHmk0Fg4NCzEEBpkATAAAAACavboC5XOE5/aY7kiYCwSohZtH/VULNot+rzB8AAAAAuKph7zo+KLxcrvCcsukPZW2qp1/oWDXAHLZCs0ofAAAAAICrGybIjJ8X+vyfcj9XnWbVcQrVCQGHCTHzP1cNNIvmkwrGAwAAAADK9VZTFg3L/9yvCnO5z2MplVdnjhRm1q3IzJSFmIMCzGFOM88/tpgAAAAAgKp29fw86PTvfkFmviIzH4yWVXKObNQgs+wGPmVB5rDBZv7nzJoEAAAAAFS1s+CxfpWYvW0hFVdiDlL3tPSrGCXIHFQlOSiYXEzlgeZiumqV5WLJfFVkAgAAAEB1RXlab6i4K/fzrnT1ADPfdhVMbyH3cz64HDrMbPJmP/mfywLMxVyLx9bkhhdNu5cgEwAAAACq29Xn8XyYmYWUO9OVYWVv67WYrh5oFlVf1jrFfNggs98p5VWqMPM/R1uTrgwv1/Y8VjXIrH1uPQAAAACsIlVytizI3Lny846e33euTKM37MwCzMU0XHXmUMHmMEHmQsljVULMfIAZbd3KY2tX2vp01YCz37zDzgQAAAAAVNXvnjO918bMAstt6YoQM1oElNvTFTleNjyrzuwNMPuFmaHWKeZN3eynSoi5Jl0ZWK5JVwaXEWTueeihh+79gQ984Pgb3ehG91u/fv1Rncf2Sk4dBwAAAIBJihDy0ssvv/yM008//UPHH3/8B88555xLOo9dlq7I6rJgM/s5cr+dqTzMDLVOMV8Y8bn9TicvOn08+zkLL+P/qLqMAHPve9/73ge+4x3v+JN99tnnzklwCQAAAABtsuuiiy76/AknnPCKj370o7/q/H5puqIyM6o1I8Dcka6szuy9lmbvaef5O53n73peKdSsGmQOujZmUZBZdCp576nj0fb96U9/+txDDz30hOXl5TUJAAAAAGirnWefffbbjzrqqNd3fr4oXRlmZhWavaeaLxf8n28pDRlmjhpk5sPMxQH/Z9fBjP/3iLbXXnvt//Of//x1e++99+0TAAAAADATLrvssm8feeSRz9iyZcv5nV8vX2kRYm5PV6/M7BdopjRCVWaVIHOUaszell0HM6ow99i0adPGc845592Li4uHJgAAAABgpuzcufOcww477GGdMHNLuqIqM1oEmdlNgXpbY1WZo1yTcqHg936t97TyCDP3PeOMM/5RiAkAAAAAs2nNmjWHdjK+OMV8v3RF5pfdF6f3/jlFrdcw9+7pGvXmOvkO9Lvxz5p0ZZC5d1wTc6+99rplAgAAAABmVifju00nzHxW/JiuDDKLwsyUirPDoa0d4rkLJY/3q8aMVHZd3J38Wte61gkJAAAAACZo165dadu2bWn79u1xWnT397C4uBjVhWndunVp/fr13d/1oXofrn3taz/m+OOP/48PfOADl6Wrn1LemxMu9/yf1+/xwidWHd6v6jJ/Xcz4PQswIyiNVHbfrVu3vr6T1N4lAQAAAMAELC8vx81p0qWXXtr9eZCFhYWoMkx77rln92d9qNaHiy666HObNm3anK64k/ml6YrrZGY3/smujznoepkpVbxO5rARb79gM/+crHXLSg899NC9OyvgTgkAAAAAJiCqDS+44IJ0ySWXlIZ3IZ4Tz41xskpFfSjvwz777HOXyP7SlZeXLLsmZlG+WMmoN/spu+FPdlp5967lH/7whx+YRr8eJwAAAABUFgHc1q1b044dO9KwYpwYt26QuFr6sLCwsPi+973v/umKELM3Eyy70c/EbvZTNtPeU8zX/8Zv/Mb9EgBAC5x00knpqU99avr+97+fmvSGN7whveAFL0jT9sEPfjDd/e53390++clPpjb5+te/3u3X4x//+NSEX/3qV1dZ3r/4i79Is2pc+2aRt7zlLd319Xd/93dpWia5vACsLlFReOGFF9YKAWPcmEaVCkZ9SOnGN75xBJnr0xVZYFbkmDfyTX4yVW/2s1DyWL4as/exNevWrTsqAQCN+9///d/uxbpvetObXuXxiy66KP3oRz9K++23X7re9a63+7lxikheXPvmRje6Ufrud7/bveB3PzGdmF6I00zOPvvsOI0kXfOa1+xeEDwvDnoioDj44IPTIYcccrXhZ511Vrc/173udbsXFe8VB0sxPKZ7xBFHXGX46aef3r22T5Gjjz76atPKO/XUU9OPf/zj7gXOm/TRj360u17GJdb3V77ylXSDG9ygu5xl7ne/+6U73vGOqfMH5e7v559/fvrlL3/ZvTbSHnvska51rWvt3p6TFPvM2rVr0/7775+aENP58z//8/SLX/wi/f3f/31qys9//vO0tLSUDjjggHTooYemSaizb8ZrN17DofNForuNe8W++ZOf/KR7vasb3vCGu7d92XYYdr8bRtHybtmyJZ133nnp8ssvT/vuu2866KCDGttXAFg94nhnlArEvJhGTCs+P/VhcB86xx6R/fVWYaaV35fTVW/4k1LxzX0q3fBnmLuWD6P3BkBrFhYW9kwAQOP+9m//thtQPvaxj02Pe9zjdj8eIWZUB9761rdOr3nNa67y3LzDDz88vfWtb00vfvGLuwco/bz61a/uBhl//dd/nU4++eTdf9mNUOrhD394etKTnrT7uRFERrj0ta99LT3hCU9Ij370o3cPi6Dij/7oj9Jpp53W/X3Dhg3pD//wD9NtbnOb7l96X/WqV6XPfOYzu6cfwdezn/3sdM973rP7+9/8zd90w48i73rXu9KmTZvSPIp1ElV0z3nOcyoFShEAR5AZvvzlL3fXca+4cPstbnGLtHnz5nSd61wnTUqE5u95z3tGOhgvEmF3LGfs8034/Oc/n974xjem//u//9v9WASZsR/f7W53S20Vdxk98cQT089+9rP0ohe9aPfrJRPr/O1vf3s34I4g82EPe1i6xz3u0X39DTLsfldH/IHid37nd672eKz/Zz7zmbv3ZwAYJI4h+/3RexQxrfgD4TB3Em97H2JYv2n1G1bWh85xfFwjMzu1PAs0GzdqkFnlRj+9j7k+JgCM0b/92791A8kqQcsDH/jAbpVTJqt2esxjHrP7L7bvfe97u9fDechDHrI76Lj2ta/dnU8E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9t1r77ThsFumh/zZp9O5PWHS8tZvpjdvvk+6+WEHpH33u0a6zs2fkN6RXRdz54/TWx51y3T4xn3SXvtfK930Pn+Q/uuMrBp0Zzr1L26fDnncB9MV8eEF6eRXPjjd5WZHpIP22yvtsdcB6fBbPzS94pO/SLvGvG4WDj4+PeYeF6X3veNzuaq/Hen7735XOvPYR2g+JmsAABAASURBVKcHX3uxoM9XLP+/Pvu4dJNDNqT9DjwqHfPIV6VPd9O27emUF904HfrED6fdsfDyr9Lbjj8w3fV1P71ymbZ9Nj33+jdPf/i1Jmspy9flzv99W3ryXW+Rrtvp91577puucdRt04P/4O3pOxdke+X2dPLm66WbvOjL6cr63e3pCy+4YbrhC75w5WPbP5eef+MD0oYNG9KGaxyXXveTBpLG9fuk/fden9Z1+3WrdJ+n/136+CdfkQ5555PT5pPO3f266b/ut3X6fv101LM/k3p3je2nvCgdfaMXpi9sv/p2TLvOS58/8Snprje+Ztqwz/7p4KNul17w0a0l8+kOTVu++Nr06DtcN11j/33ThoOum+74kk+lSZ5tP7h/OTu+kU582J3TTY88KO23115p/0NukO58wsvT+364mv54AQAAANMzV4Vyy794b3r68S9P5zzwTekb5y6lsz73qnSTzzwjnfA336t52vCutOVXS+mA33hkevFzrplO+vO3pN2Z0/Iv03tf+ea09zNenB55/QPS+Z3nXTFoIR1w5xem937znHTBpRemn33iuWn9Wx6fXvaxlZhm1xnpzY++f/rznx2X/u5zP0m//OVP0hff8eJ090NXNsniQemuLz0pfe3/ltL5Z3w8/cFB709Peuobi2+wsnxp+t/PfyatOeED6QfnXZgu2fKD9O7Hbk9vfMzz0nt+vTzedbOwMd37ccen5Q+8PX2y954o27+Z3nnSeelejz0+HVxUStsJat94wkPSPy88Nb3rB79MW37ykfSCDe9Ij3nSm9JPd61LNz/2Tmnxq1+88kZOl301/c9XL0rf/tJX00XZJH74hfTlnXdOv33TtakxFdblrnO/lU7+2e3Sa795drrgol+m0z788nSr77w03esR/5J+tHOIea07Nr32B+enrVu3pq2/+mR67nXH83Jcd4MnpZc9Zr/0sbd9IP0iFmHgul+fbnuPY9P2z5+cTt29Y+xMP/7s/6SLjz0u3Xpdfurb0nde/eD00DduSye8+SvprF+fm07/zFvTM2+/f8l8OqNu/1J61RNfn7Y/5UPpx0sXpaWffj69+Sm3SnunCSnr39We/7P01c9enO73tu+ncy+8IP3iWyel517r4+np93xqevfPlbsCAADAuLUwyNyZfvDa49IRhx2WDltpR9zzb9NpO8vHO+2tr06fut2fpb9/8m3TIXusTfsede/0shfdI/30Pe9Lpw8TMF1NBJnnpwMOPCjd4IkvTg884+/TiStVmdu/+8/pb75xj/SiJ94gHXTghk4gtWV31dvCxuukow7co7OS16QNN3l0evK9FtJXv/zDbnC442v/kl771bukV/3r89Pdrrcp7bXn/unaR98wHZxtkYX905FH3yAdss/6tMeBN0uPetmT042+8YkB11RcSPsecmg6cK+1ac1e10rHPOul6ZEHfC59/KvbxrxuUtr3ro9PD9//o+ntH/n17mW/7Ev/kd5z2YPSE+59QOElAbZ/+Z/Sa3/0wPTa1zw8Hb1pfVq34cbpd17xe+mWX3pX+mgnbdvzDndLx5z72fTZM67o3PZvfjqdcq2bpcO/+pn01cuv2CY/P/mz6ew73j3dfs/UsEHrcuUZ6w5IBx+0b1q3dq90jZvcL/3Rv/9luss3Xp1e//nLU/usTze7zU3T8o9OT2fsKF/3+9zlvunY8z6ePv7jlR1j11npEx87K/3mfe6U9spP+pJPptf9wy/Sw078x/SUO14n7b/nXmnjkUen621aKJ1PWr4wbb1oXTrwOoel/dd03oz2PjTd+LqbGrmExLbPPCcdsT53rd09bpJe8pWeGtmy/hXaM2065MC099p1ae9r3TI94jVvTy898oOd1/GpqebLCAAAACjRwiBzTfqNp70zfeXrX09fX2lfecdT0/XXlI23PZ323dPSlg8/I92kJwS9wdM+ki6/9IK0VKtgamc6f+mitO+G/dLifsel5z3jGumk17wjnbVzKX34b96a9nza89M99l9M++6/b7pkaWnllNud6ZxPvyY96R63TNe79mHpOte9WXr6+5bSZZdd1gn7ltOvv/3NdPaN7pSO2Vgttllz7SPT4cvnpV/8quKCrLl2OvLQS9K5517cmds4103HHsekx51wePrU296bzulO68Luz3s84gnp2MLyus7yf/+76ayz/i094npX9ufa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AAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA6gmZAAAAAEDqCZkAAAAAQOoJmQAAAABA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" alt="43cd445c33bed77cb8e6320c88681f94.png"/></p>
+<ul>
+<li>Use the entire disk</li>
+<li>Under <code class="inline-code">Profile Configuration</code>, enter the following:
+<ul>
+<li>Set <code class="inline-code">Your server  name</code> (system hostname) to <code class="inline-code">loghost</code></li>
+<li>Add a user account for yourself (your first name) and configure a password</li>
+</ul>
+</li>
+<li>Under <code class="inline-code">SSH Configuration</code> choose to <code class="inline-code">Install OpenSSH server</code></li>
+<li>You do NOT need to install any additional software or packages.</li>
+<li>Once the installation is complete, reboot the server and disconnect the installation <code class="inline-code">.iso</code> image from the optical drive and hit return when prompted.</li>
+</ul>
+<p>If your environment is configured correctly and installation is successful, you should be able to log in, and your server should have access to the internet for downloading and installing updates through your OPNsense router.</p>
+<h2 id="software-installation-and-configuration">Software Installation and Configuration</h2>
+<ul>
+<li>Install the software <code class="inline-code">mailutils</code>, <code class="inline-code">mysql-server</code>, and <code class="inline-code">rsyslog-mysql</code> as follows:</li>
+</ul>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
+" data-joplin-source-close="
+```">sudo apt install mailutils
+# Configure for local-only mail delivery
+# If prompted, you can have mail delivered to your user account
+
+sudo apt install mysql-server
+
+# Harden MySQL, root should be using the authentication socket by default
+# If you are to set a password for root, make sure to remember this password!
+sudo mysql_secure_installation 
+
+sudo apt install rsyslog-mysql
+# Choose &quot;yes&quot; to configure local DB, 
+# Leave Application Password blank so a random password is chosen!</pre><pre class="hljs"><code><span class="hljs-built_in">sudo</span> apt install mailutils
+<span class="hljs-comment"># Configure for local-only mail delivery</span>
+<span class="hljs-comment"># If prompted, you can have mail delivered to your user account</span>
+
+<span class="hljs-built_in">sudo</span> apt install mysql-server
+
+<span class="hljs-comment"># Harden MySQL, root should be using the authentication socket by default</span>
+<span class="hljs-comment"># If you are to set a password for root, make sure to remember this password!</span>
+<span class="hljs-built_in">sudo</span> mysql_secure_installation 
+
+<span class="hljs-built_in">sudo</span> apt install rsyslog-mysql
+<span class="hljs-comment"># Choose &quot;yes&quot; to configure local DB, </span>
+<span class="hljs-comment"># Leave Application Password blank so a random password is chosen!</span></code></pre></div>
+<ul>
+<li>Enable remote logging via <code class="inline-code">tcp</code> and <code class="inline-code">udp</code> in <code class="inline-code">/etc/rsyslog.conf</code> so that <code class="inline-code">loghost</code> can be a logging server by uncommenting the following lines to enable the network modules:</li>
+</ul>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="" data-joplin-source-open="```
+" data-joplin-source-close="
+```">module(load=&quot;imudp&quot;)
+input(type=&quot;imudp&quot; port=&quot;514&quot;)
+
+module(load=&quot;imtcp&quot;)
+input(type=&quot;imtcp&quot; port=&quot;514&quot;)</pre><pre class="hljs"><code>module(<span class="hljs-attribute">load</span>=<span class="hljs-string">&quot;imudp&quot;</span>)
+input(<span class="hljs-attribute">type</span>=<span class="hljs-string">&quot;imudp&quot;</span> <span class="hljs-attribute">port</span>=<span class="hljs-string">&quot;514&quot;</span>)
+
+module(<span class="hljs-attribute">load</span>=<span class="hljs-string">&quot;imtcp&quot;</span>)
+input(<span class="hljs-attribute">type</span>=<span class="hljs-string">&quot;imtcp&quot;</span> <span class="hljs-attribute">port</span>=<span class="hljs-string">&quot;514&quot;</span>)</code></pre></div>
+<ul>
+<li>Restart the <code class="inline-code">rsyslog</code> service:</li>
+</ul>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
+" data-joplin-source-close="
+```">sudo systemctl restart rsyslog.service</pre><pre class="hljs"><code><span class="hljs-built_in">sudo</span> systemctl restart rsyslog.service</code></pre></div>
+<ul>
+<li>Verify your <code class="inline-code">rsyslog</code> service is listening for connections on port <code class="inline-code">514</code> for both <code class="inline-code">udp</code> and <code class="inline-code">tcp</code>:</li>
+</ul>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="" data-joplin-source-open="```
+" data-joplin-source-close="
+```">sudo ss -tulpn</pre><pre class="hljs"><code><span class="hljs-built_in">sudo</span> ss -tulpn</code></pre></div>
+<ul>
+<li>Verify your <code class="inline-code">mysql</code> database is receiving and storing log messages by checking that the count of event records is greater than zero and growing:</li>
+</ul>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
+" data-joplin-source-close="
+```">sudo mysql &lt;&lt;&lt; &quot;select count(*) from Syslog.SystemEvents;&quot;</pre><pre class="hljs"><code><span class="hljs-built_in">sudo</span> mysql &lt;&lt;&lt; <span class="hljs-string">&quot;select count(*) from Syslog.SystemEvents;&quot;</span></code></pre></div>
+<ul>
+<li>Enable the UFW firewall on your system and open ports:</li>
+</ul>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
+" data-joplin-source-close="
+```"># If UFW is not installed, use &quot;sudo apt install ufw&quot;
+
+# Allow SSH connections
+sudo ufw allow 22/tcp
+
+# Allow rsyslog traffic 
+sudo ufw allow 514
+
+# Activate UFW
+sudo ufw enable</pre><pre class="hljs"><code><span class="hljs-comment"># If UFW is not installed, use &quot;sudo apt install ufw&quot;</span>
+
+<span class="hljs-comment"># Allow SSH connections</span>
+<span class="hljs-built_in">sudo</span> ufw allow 22/tcp
+
+<span class="hljs-comment"># Allow rsyslog traffic </span>
+<span class="hljs-built_in">sudo</span> ufw allow 514
+
+<span class="hljs-comment"># Activate UFW</span>
+<span class="hljs-built_in">sudo</span> ufw <span class="hljs-built_in">enable</span></code></pre></div>
+<h1 id="sending-logs-to-the-log-server">Sending Logs to the Log Server</h1>
+<h2 id="opnsense-logs">OPNsense Logs</h2>
+<ul>
+<li>Log into the OPNsense Web UI and navigate to <code class="inline-code">System &gt; Settings &gt; Logging</code></li>
+<li>Add your <code class="inline-code">loghost</code>  as a remote logging server by visiting the <code class="inline-code">Remote</code> tab and clicking on the <code class="inline-code">+</code>.
+<ul>
+<li>If you have configured your DNS overrides, you should be able to use <code class="inline-code">loghost</code> instead of the IP address</li>
+</ul>
+</li>
+</ul>
+<p>On your <code class="inline-code">loghost</code> server, ensure that the logs are arriving from other hosts by querying the database. The following are examples:</p>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
+" data-joplin-source-close="
+```">sudo mysql &lt;&lt;&lt;&quot;select count(*) from Syslog.SystemEvents where FromHost != &apos;loghost&apos;;&quot;
+sudo mysql &lt;&lt;&lt;&quot;select count(*) from Syslog.SystemEvents where FromHost = &apos;opnsense.home.arpa&apos;;&quot;</pre><pre class="hljs"><code><span class="hljs-built_in">sudo</span> mysql &lt;&lt;&lt;<span class="hljs-string">&quot;select count(*) from Syslog.SystemEvents where FromHost != &apos;loghost&apos;;&quot;</span>
+<span class="hljs-built_in">sudo</span> mysql &lt;&lt;&lt;<span class="hljs-string">&quot;select count(*) from Syslog.SystemEvents where FromHost = &apos;opnsense.home.arpa&apos;;&quot;</span></code></pre></div>
+<p><strong>Tip:</strong> The following is another example to see what hosts other than <code class="inline-code">loghost</code>  exist in the database. This is useful for troubleshooting, or you want to see the hostnames. Feel free to try out other SQL commands to view the logs.</p>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
+" data-joplin-source-close="
+```">sudo mysql &lt;&lt;&lt;&quot;select FromHost from Syslog.SystemEvents where FromHost != &apos;loghost&apos;;&quot; | more</pre><pre class="hljs"><code><span class="hljs-built_in">sudo</span> mysql &lt;&lt;&lt;<span class="hljs-string">&quot;select FromHost from Syslog.SystemEvents where FromHost != &apos;loghost&apos;;&quot;</span> | more</code></pre></div>
+<h1 id="windows-host-optional">Windows Host (Optional)</h1>
+<h2 id="create-a-vm-for-windows-desktop">Create a VM for Windows Desktop</h2>
+<ol>
+<li>Create a new VM and connect to your <code class="inline-code">Host-only Network</code>
+<ul>
+<li>Windows requires at least <code class="inline-code">2</code> CPUs and <code class="inline-code">4GB</code> of RAM</li>
+</ul>
+</li>
+<li>Obtain and attach an installation ISO for Windows 10/11 - see <a data-from-md="" title="https://microsoft.com" href="https://microsoft.com">microsoft.com</a></li>
+<li>Install the OS. The default install is fine for our purposes, evaluation mode is fine, no need to purchase a license</li>
+<li>Select a static IP address for your Windows VM, and add an entry to the DNS Resolver overrides under <code class="inline-code">Services &gt; Unbound DNS &gt; Overrides</code> in your OPNsense router to create the name <code class="inline-code">windows.home.arpa</code> with the address of your Windows VM</li>
+</ol>
+<h2 id="modify-the-windows-desktop-vm-to-send-logs-to-loghost-using-rsyslog">Modify the Windows desktop VM to send logs to loghost using rsyslog</h2>
+<ol>
+<li>Download an agent program to send Windows Event Logs to a syslog server. Examples:
+<ul>
+<li><a data-from-md="" title="https://www.rsyslog.com/windows-agent/" href="https://www.rsyslog.com/windows-agent/">rsyslog Windows Agent</a> and (<a data-from-md="" title="https://www.rsyslog.com/download/files/windows-agent-manual/index.rsyslog.html" href="https://www.rsyslog.com/download/files/windows-agent-manual/index.rsyslog.html">documentation</a>)</li>
+<li><a data-from-md="" title="https://nxlog.co/collecting-logs-from-microsoft-windows" href="https://nxlog.co/collecting-logs-from-microsoft-windows">nxlog (30-day trial)</a> (requires providing an email address and creating an account).</li>
+<li>Find and choose any other Windows syslog agent you prefer</li>
+</ul>
+</li>
+<li>Install the agent and configure it to send the logs to <code class="inline-code">loghost</code>.</li>
+<li>Confirm windows log messages are showing up in the text log files <strong>on loghost</strong></li>
+</ol>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
+" data-joplin-source-close="
+```">sudo grep windows /var/log/syslog|head
+sudo mysql &lt;&lt;&lt;&quot;select count(*) from Syslog.SystemEvents where FromHost = &apos;windows.home.arpa&apos;;&quot;</pre><pre class="hljs"><code><span class="hljs-built_in">sudo</span> grep windows /var/log/syslog|<span class="hljs-built_in">head</span>
+<span class="hljs-built_in">sudo</span> mysql &lt;&lt;&lt;<span class="hljs-string">&quot;select count(*) from Syslog.SystemEvents where FromHost = &apos;windows.home.arpa&apos;;&quot;</span></code></pre></div>
+<h1 id="grading">Grading</h1>
+<p>A script is provided for your system evaluation.</p>
+</div></div>
+					</body>
+				</html>
+			
