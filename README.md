@@ -6,3 +6,4 @@
 - [04 - Log Analysis](04%20-%20Log%20Analysis.html)
 
 ## Assignments and Labs:
+- [Lab 01 - Networks Creation](./labs/Lab%2001%20-%20Networks%20Creation.html)
