@@ -7,3 +7,6 @@
 
 ## Assignments and Labs:
 - [Lab 01 - Networks Creation](./labs/Lab%2001%20-%20Networks%20Creation.html)
+- [Lab 02 - Log Collection](./labs/Labb%2002b%20-b%20Logb%20Collection.html)
+- [Lab 03 - The Log Analysis System](./labs/Labb%2003b%20-b%20Theb%20Logb%20Analysisb%20System.html)
+- [Lab 04 - SNMP](./labs/Labb%2004b%20-b%20SNMP.html)
