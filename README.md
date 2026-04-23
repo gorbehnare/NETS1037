@@ -4,6 +4,7 @@
 - [02 - Log Management and Logging Formats](./02%20-%20Log%20Management%20and%20Logging%20Formats.html)
 - [03 - Message Capture](03%20-%20Message%20Capture.html)
 - [04 - Log Analysis](04%20-%20Log%20Analysis.html)
+- [05 - SNMP](./05%20-%20SNMP.html)
 
 ## Assignments and Labs:
 - [Lab 01 - Networks Creation](./labs/Lab%2001%20-%20Networks%20Creation.html)
