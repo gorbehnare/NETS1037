@@ -6,6 +6,7 @@
 - [04 - Log Analysis](04%20-%20Log%20Analysis.html)
 - [05 - SNMP](./05%20-%20SNMP.html)
 - [06 - SNMP Traps](./06%20-%20SNMP%20Traps.html)
+- [07 - NetFlow and IPFIX](./07%20-%20NetFlow%20and%20IPFIX.html)
 
 ## Assignments and Labs:
 - [Lab 01 - Networks Creation](./labs/Lab%2001%20-%20Networks%20Creation.html)
@@ -13,3 +14,4 @@
 - [Lab 03 - The Log Analysis System](./labs/Lab%2003%20-%20The%20Log%20Analysis%20System.html)
 - [Lab 04 - SNMP](./labs/Lab%2004%20-%20SNMP.html)
 - [Lab 05 - SNMP Traps](./labs/Lab%2005%20-%20SNMP%20Traps.html)
+- [Lab 06 - NetFlow](./labs/Lab%2006%20-%20NetFlow.html)
