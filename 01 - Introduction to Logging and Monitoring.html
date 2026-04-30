@@ -1069,18 +1069,36 @@ pre.mermaid[data-processed=true] { white-space: unset; }
 <p>PCI compliance is usually not mandated by law in most jurisdictions; there are overlaps with laws and regulations in some regions. For example, there are no federal compliance mandates in the United States, but PCI DSS overlaps with GDPR in the EU, so infringement constitutes a fine from the EU and a separate fine from the payment card industry.</p>
 <p>PCI DSS 4.0 describes logging best practices in section 10:</p>
 <ul>
-<li>Centralize log collection across the environment (10.1, 10.2)</li>
+<li>Centralize log collection across the environment (10.1, 10.2)
+<ul>
 <li>Centralizing logs from diverse sources to a single location helps you maintain visibility into every component of the cardholder data environment.</li>
-<li>Safeguard log integrity and restrict access (10.3, 6.5, 11.5.2)</li>
+</ul>
+</li>
+<li>Safeguard log integrity and restrict access (10.3, 6.5, 11.5.2)
+<ul>
 <li>PCI DSS requires that logs be tamper-evident and protected against unauthorized access. This means maintaining audit trails, implementing encryption during transit, and ensuring strict controls.</li>
-<li>Meet PCI log retention and availability requirements (10.5)</li>
+</ul>
+</li>
+<li>Meet PCI log retention and availability requirements (10.5)
+<ul>
 <li>PCI DSS specifies that audit logs must be retained for at least 12 months, with at least the most recent three months of data immediately available for analysis.</li>
-<li>Monitor for suspicious activity in real time (10.2, 10.4, 10.7)</li>
+</ul>
+</li>
+<li>Monitor for suspicious activity in real time (10.2, 10.4, 10.7)
+<ul>
 <li>Collecting and storing logs isn&rsquo;t enough. You need real-time log monitoring to detect anomalies before they become incidents. Additionally, PCI DSS requires that you review logs from critical systems at least once a day.</li>
-<li>Prevent sensitive data from leaving PCI infrastructure (3.5)</li>
+</ul>
+</li>
+<li>Prevent sensitive data from leaving PCI infrastructure (3.5)
+<ul>
 <li>PCI DSS emphasizes safeguarding sensitive data such as account details and card numbers. Logs can inadvertently contain this information, which must not leave your PCI environment.</li>
-<li>Keep timestamps consistent across systems (10.6)</li>
+</ul>
+</li>
+<li>Keep timestamps consistent across systems (10.6)
+<ul>
 <li>PCI DSS requires synchronized time settings across all infrastructure. Without consistent timestamps, forensic investigations and threat analysis are impossible.</li>
+</ul>
+</li>
 </ul>
 <h1 id="the-practice-of-logging">The Practice of Logging</h1>
 <p>Logging information is essential to information security and provides insights into how a system is working. In the process of logging sensitive information, such as legitimate user activities and information maybe captured. This may create implications of potential information security or privacy violations. A security policy must be produced by an organization that will identify how logs may be collected, managed, and used. The security policy must clearly define, among other things, the level of logging used, who monitors those logs, how these logs are used, and how to be protected. For internal users, the security policy should be presented to all on the first day they start to work and use the organization&apos;s IT resources. All users need to understand and agree to the level of privacy provided by the organization.</p>
@@ -1158,6 +1176,7 @@ pre.mermaid[data-processed=true] { white-space: unset; }
 
       -  Believable:  It must be readily believable and understandable
          by a court.</code></pre></div>
+<p><sub class="jop-noMdConv">v 1.0 2026-04-30</sub></p>
 </div></div>
 					</body>
 				</html>
