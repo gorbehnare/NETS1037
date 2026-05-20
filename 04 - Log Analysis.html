@@ -1017,14 +1017,14 @@ pre.mermaid[data-processed=true] { white-space: unset; }
 </ul>
 <p>On the other hand, organizational information security goals and policies may be used to define what to look for in logs. As an example, if availability and uptime are of utmost importance, hardware status logs may be more valuable in an on-prem infrastructure, since they may correlate to the desired outcome, while the same logs may be completely irrelevant in a cloud deployment, where infrastructure is not under the direct control of an organization.</p>
 <p>Additionally, a baseline needs to be established to identify what should be considered &quot;normal&quot; in order to recognize what would be &quot;interesting&quot; or &quot;unusual&quot;.</p>
-<p>Therefore, the first step in log analysis is to pare the incoming log data to only include the types of events that you care about, so you can more readily see when you get something out of the ordinary. To obtain value from the logs, you must ensure that:</p>
+<p>Therefore, the first step in log analysis is to pare the incoming log data to only include the types of events that you care about, so you can more readily see when you get something out of the ordinary. To gain value from the logs, you must ensure that:</p>
 <ul>
 <li>Message details, quality, and integrity are assured
 <ul>
 <li>Configure your sources to send relevant information and at sufficient levels of details</li>
 <li>Make sure that clocks are synchronized</li>
 <li>Ensure consistency in implementation of infrastructure and configurations (for example, using DNS names, hostnames, or IP addresses)</li>
-<li>Ensure that steps are taken to ensure that logs are protected against tampering (For example, intruders may tamper with logging services, or with the messages to hide their presence, or obscure the attack vector)</li>
+<li>Ensure that steps are taken so that the logs are protected against tampering (For example, intruders may tamper with logging services, or with the messages to hide their presence, or obscure the attack vector)</li>
 </ul>
 </li>
 <li>Messages are parsed correctly, so they are useful
