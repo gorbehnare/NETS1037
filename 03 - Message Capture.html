@@ -1227,14 +1227,14 @@ MSG (UTF-8 Format) = %xEF.BB.BF + Any-UTF-8-STRING
 </li>
 </ul>
 <p>Devices and appliances may support <code class="inline-code">syslog</code> or <code class="inline-code">rsyslog</code> and may have varying ability for log transmission over TCP, UDP, or RELP with or without SSL/TLS.</p>
-<p>The basic <code class="inline-code">syslog</code> daemon comes enable by default on almost all Linux and Unix systems that facilitate local logging without user intervention. The general configuration location is under <code class="inline-code">/etc/syslog.conf</code>. There are slight differences between the GNU/Linux and BSD and Unix <code class="inline-code">syslog</code> implementation. GNU/Linux <code class="inline-code">syslog</code> implementation is compatible with Unix, however has additional extensions and components, such as <code class="inline-code">klogd</code> (kernel log daemon) to send kernel logs to <code class="inline-code">syslog</code> daemon.</p>
+<p>The basic <code class="inline-code">syslog</code> daemon comes enabled by default on almost all Linux and Unix systems that facilitate local logging without user intervention. The general configuration location is under <code class="inline-code">/etc/syslog.conf</code>. There are slight differences between the GNU/Linux and BSD and Unix <code class="inline-code">syslog</code> implementation. GNU/Linux <code class="inline-code">syslog</code> implementation is compatible with Unix, however has additional extensions and components, such as <code class="inline-code">klogd</code> (kernel log daemon) to send kernel logs to <code class="inline-code">syslog</code> daemon.</p>
 <p>In Unix and Linux-based systems the system administrators have many options and controls over how logs are stored, sorted, transmitted, and rotated (i.e. deleted or archived) depending on the&nbsp;<code class="inline-code">syslog</code> software implementation used. An example option include using an &quot;action&quot; field in the <code class="inline-code">/etc/syslog.conf</code> to send messages to different destinations based on facility or priority of the message. Message destinations include the following:</p>
 <ul>
 <li>Directed to a specific s terminal or console; (for live viewing and monitoring)</li>
 <li>A selected list of users;</li>
 <li>Everyone logged on;</li>
 <li>A regular file; (most common action)</li>
-<li>To a named Pipe; (send messages directly to third party programs or scripts for log reduction or special types of alerting etc.)</li>
+<li>To a named pipe; (send messages directly to third party programs or scripts for log reduction or special types of alerting etc.)</li>
 <li>Over the network to a remote Machine; (ideal solution for central log management)</li>
 </ul>
 <h1 id="network-log-transmission">Network log Transmission</h1>
