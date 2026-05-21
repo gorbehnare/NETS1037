@@ -1014,7 +1014,7 @@ MSG (ASCII message) = *Octet + Any-String
 - *Octet is decimal number 0-255
 
 MSG (UTF-8 Format) = %xEF.BB.BF + Any-UTF-8-STRING
-- the &quot;%xEF.BB.BF&quot; is calle BOM (Unicode byte order mask)</pre><pre class="hljs"><code>Syslog_Message = HEADER + %d32 + structured-data + %d32 + MSG
+- the &quot;%xEF.BB.BF&quot; is called BOM (Unicode byte order mask)</pre><pre class="hljs"><code>Syslog_Message = HEADER + %d32 + structured-data + %d32 + MSG
 - %d32 is Special ASCII &quot;space&quot; character
 
 HEADER = &lt;Digit:0-191&gt;VERSION + %d32 + TIMESTAMP + %d32 + HOSTNAME + %d32 + APP-NAME + %d32 + PROCID + %d32 + MSGID
@@ -1025,7 +1025,7 @@ MSG (ASCII message) = *Octet + Any-String
 - *Octet is decimal number 0-255
 
 MSG (UTF-8 Format) = %xEF.BB.BF + Any-UTF-8-STRING
-- the &quot;%xEF.BB.BF&quot; is calle BOM (Unicode byte order mask)</code></pre></div>
+- the &quot;%xEF.BB.BF&quot; is called BOM (Unicode byte order mask)</code></pre></div>
 <p>The <code class="inline-code">syslog</code> messages section of the protocol have three labels: Facility code (number from 0 to 23), Severity (number from <code class="inline-code">0-7</code>), and Message Content (default is 1024 UTF-8 characters). The <code class="inline-code">syslog</code> server (logger) will add additional information such as timestamp, hostname or IP address of the originator, and process ID.</p>
 <p>The standard describes the facilities labels and severity numbers. The facility is meant to describe the type of system that is logging the message. The facility numbers <code class="inline-code">0-15</code> are well defined in the standard, while 16-23 are &quot;locally used facilities&quot;. Subtle differences exists between different <code class="inline-code">syslog</code> implementations due to ambiguities in standards. For example the facility numbers differ between different systems. For details of facility assignments on various systems and operating systems refer to their vendor documentation.</p>
 <p>The following is the table of facility number as described by the standard:</p>
