@@ -1239,7 +1239,7 @@ MSG (UTF-8 Format) = %xEF.BB.BF + Any-UTF-8-STRING
 </ul>
 <h1 id="network-log-transmission">Network log Transmission</h1>
 <p>The basic <code class="inline-code">syslog</code> messages are transmitted to remote host over UDP (port <code class="inline-code">UDP/514</code>) by default. UDP provides simplicity and speed, however the messages can arrive out of order or can be corrupted, or never be delivered.</p>
-<p>TCP (<code class="inline-code">TCP/514</code>) can be used for added grantees of message delivery and integrity, however TCP messages are only delivered when the remote host is reachable. The messages are lost over TCP when the remote host is unreachable or offline.</p>
+<p>TCP (<code class="inline-code">TCP/514</code>) can be used for added guarantees of message delivery and integrity, however TCP messages are only delivered when the remote host is reachable. The messages are lost over TCP when the remote host is unreachable or offline.</p>
 <p>For a more reliable delivery the RELP (Reliable Event Logging Protocol) is used. The RELP (port <code class="inline-code">2514</code>) is not enabled by default and must be configured on the server.</p>
 <h1 id="log-reliability-and-performance-trade-off">Log Reliability and Performance Trade-Off</h1>
 <p>Source: <a data-from-md="" title="https://docs.rsyslog.com/doc/whitepapers/reliable_logging.html" href="https://docs.rsyslog.com/doc/whitepapers/reliable_logging.html">https://docs.rsyslog.com/doc/whitepapers/reliable_logging.html</a></p>
