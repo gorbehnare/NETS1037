@@ -1,0 +1,1316 @@
+
+				
+				<html>
+					<head>
+						<meta charset="UTF-8"/>
+						<meta name="viewport" content="width=device-width, initial-scale=1"/>
+						<style>.jsdraw--editButton {
+  display: inline-block;
+  opacity: 0;
+  overflow: hidden;
+  z-index: 1;
+  position: relative;
+  align-self: flex-end;
+  justify-self: right;
+  transition: opacity 0.2s ease;
+}
+
+.jsdraw--editButton.-show,
+.jsdraw--editButton:hover {
+  opacity: 0.9;
+  overflow: visible;
+}
+
+.jsdraw--editButton > button {
+  width: min-content;
+  max-height: 50px;
+  position: absolute;
+}</style><script>(() => {
+  // src/localization.ts
+  var defaultStrings = {
+    insertDrawing: "Insert Drawing",
+    insertDrawingInNewWindow: "Insert drawing in new window",
+    restoreFromAutosave: "Restore from autosaved drawing",
+    deleteAutosave: "Delete all autosaved drawings",
+    noSuchAutosaveExists: "No autosave exists",
+    discardChanges: "Discard changes",
+    defaultImageTitle: "Freehand Drawing",
+    edit: "Edit",
+    close: "Close",
+    saveAndClose: "Save and close",
+    overwriteExisting: "Overwrite existing",
+    saveAsNewDrawing: "Save as a new drawing",
+    clickBelowToContinue: "Done! Click below to continue.",
+    discardUnsavedChanges: "Discard unsaved changes?",
+    resumeEditing: "Resume editing",
+    saveAndResumeEditing: "Save and resume editing",
+    saveChanges: "Save changes",
+    exitInstructions: "All changes saved! Click below to exit.",
+    settingsPaneDescription: "Settings for the Freehand Drawing image editor.",
+    setting__disableFullScreen: "Dialog mode",
+    setting__disableFullScreenDescription: "Enabling this setting causes the editor to only partially fill the Joplin window.",
+    setting__autosaveIntervalSettingLabel: "Autosave interval (minutes)",
+    setting__autosaveIntervalSettingDescription: 'Adjusts how often a backup copy of the current drawing is created. The most recent autosave can be restored by searching for ":restore autosave" in the command palette (ctrl+shift+p or cmd+shift+p on MacOS) and clicking "Restore from autosaved drawing". If this setting is set to zero, autosaves are created every two minutes.',
+    setting__themeLabel: "Theme",
+    setting__toolbarTypeLabel: "Toolbar type",
+    setting__toolbarTypeDescription: "This setting switches between possible toolbar user interfaces for the image editor.",
+    setting__keyboardShortcuts: "Keyboard shortcuts",
+    toolbarTypeDefault: "Default",
+    toolbarTypeSidebar: "Sidebar",
+    toolbarTypeDropdown: "Dropdown",
+    styleMatchJoplin: "Match Joplin",
+    styleJsDrawLight: "Light",
+    styleJsDrawDark: "Dark",
+    images: "Images",
+    pdfs: "PDFs",
+    allFiles: "All Files",
+    loadLargePdf: (pageCount) => `A selected file is a large PDF (${pageCount} pages). Loading it may take some time and increase the size of the current drawing. Continue?`,
+    notAnEditableImage: (resourceId, resourceType) => `Resource ${resourceId} is not an editable image. Unable to edit resource of type ${resourceType}.`
+  };
+  var localizations = {
+    de: {
+      insertDrawing: "Zeichnung einf\xFCgen",
+      insertDrawingInNewWindow: "Zeichnung in neuem Fenster einf\xFCgen",
+      restoreFromAutosave: "Automatische Sicherung wiederherstellen",
+      deleteAutosave: "Alle automatischen Sicherungen l\xF6schen",
+      noSuchAutosaveExists: "Keine automatischen Sicherungen vorhanden",
+      discardChanges: "\xC4nderungen verwerfen",
+      defaultImageTitle: "Freihand-Zeichnen",
+      edit: "Bearbeiten",
+      close: "Schlie\xDFen",
+      saveAndClose: "Speichern und Schlie\xDFen",
+      overwriteExisting: "Existierende Zeichnung \xFCberschreiben",
+      saveAsNewDrawing: "Als neue Zeichnung speichern",
+      clickBelowToContinue: "Fertig! Unten klicken, um fortzufahen.",
+      discardUnsavedChanges: "Ungespeicherte \xC4nderungen verwerfen?",
+      resumeEditing: "Weiter bearbeiten",
+      saveAndResumeEditing: "Speichern und weiter bearbeiten",
+      saveChanges: "\xC4nderungen speichern",
+      exitInstructions: "Alle \xC4nderungen gespeichert! Unten klicken, um das Fenster zu schlie\xDFen.",
+      settingsPaneDescription: "Einstellungen f\xFCr Freihand-Zeichnen.",
+      setting__disableFullScreen: "Dialogmodus",
+      setting__disableFullScreenDescription: "Wenn diese Einstellung aktiviert ist, f\xFCllt der Editor das Joplin-Fenster nur teilweise aus.",
+      setting__autosaveIntervalSettingLabel: "Intervall f\xFCr die automatische Speicherung (Minuten)",
+      setting__autosaveIntervalSettingDescription: "Legt fest, wie oft eine Sicherungskopie der aktuellen Zeichnung erstellt wird. Die letzte automatische Speicherung kann wiederhergestellt werden, indem du in der Befehlspalette (Strg+Umschalt+P oder Cmd+Umschalt+P unter MacOS) nach \u201E:restore autosave\u201C suchst und auf \u201EAutomatische Sicherung wiederherstellen\u201C klickst. Wenn diese Einstellung auf Null gesetzt ist, werden alle zwei Minuten automatische Speichervorg\xE4nge durchgef\xFChrt.",
+      setting__themeLabel: "Design",
+      setting__toolbarTypeLabel: "Toolbar-Typ",
+      setting__toolbarTypeDescription: "Diese Einstellung wechselt zwischen den m\xF6glichen Benutzeroberfl\xE4chen der Symbolleiste f\xFCr den Bildeditor.",
+      setting__keyboardShortcuts: "Tastaturk\xFCrzel",
+      toolbarTypeDefault: "Standard",
+      toolbarTypeSidebar: "Sidebar",
+      toolbarTypeDropdown: "Dropdown-Men\xFC",
+      styleMatchJoplin: "wie Joplin",
+      styleJsDrawLight: "Hell",
+      styleJsDrawDark: "Dunkel",
+      images: "Bilder",
+      pdfs: "PDFs",
+      allFiles: "Alle Dateien",
+      loadLargePdf: (pageCount) => `Die ausgew\xE4hlte Datei ist eine gro\xDFe PDF-Datei (mit ${pageCount} Seiten). Das Laden kann einige Zeit dauern und die Gr\xF6\xDFe der aktuellen Zeichnung erh\xF6hen. Fortfahren?`,
+      notAnEditableImage: (resourceId, resourceType) => `Die Ressource ${resourceId} ist kein bearbeitbares Bild. Ressource vom Typ ${resourceType} kann nicht bearbeitet werden.`
+    },
+    en: defaultStrings,
+    fr: {
+      insertDrawing: "Ins\xE9rer un dessin",
+      insertDrawingInNewWindow: "Ins\xE9rer un dessin dans une nouvelle fen\xEAtre",
+      restoreFromAutosave: "Restaurer depuis la sauvegarde automatique",
+      deleteAutosave: "Supprimer toutes les sauvegardes automatiques",
+      noSuchAutosaveExists: "Aucune sauvegarde automatique n\u2019existe",
+      discardChanges: "Ignorer les modifications",
+      defaultImageTitle: "Dessin \xE0 main lev\xE9e",
+      edit: "Modifier",
+      close: "Fermer",
+      saveAndClose: "Enregistrer et fermer",
+      overwriteExisting: "\xC9craser l\u2019existant",
+      saveAsNewDrawing: "Enregistrer comme nouveau dessin",
+      clickBelowToContinue: "Termin\xE9 ! Cliquez ci-dessous pour continuer.",
+      discardUnsavedChanges: "Ignorer les modifications non enregistr\xE9es ?",
+      resumeEditing: "Reprendre l\u2019\xE9dition",
+      saveAndResumeEditing: "Enregistrer et continuer l\u2019\xE9dition",
+      saveChanges: "Enregistrer les modifications",
+      exitInstructions: "Toutes les modifications sont enregistr\xE9es. Cliquez ci-dessous pour quitter.",
+      settingsPaneDescription: "Param\xE8tres pour l\u2019\xE9diteur de dessin.",
+      setting__disableFullScreen: "Mode dialogue",
+      setting__disableFullScreenDescription: "Lorsque cette option est activ\xE9e, l\u2019\xE9diteur ne remplit que partiellement la fen\xEAtre Joplin.",
+      setting__autosaveIntervalSettingLabel: "Intervalle de sauvegarde automatique (minutes)",
+      setting__autosaveIntervalSettingDescription: "D\xE9finit la fr\xE9quence de cr\xE9ation des sauvegardes automatiques du dessin courant.",
+      setting__themeLabel: "Th\xE8me",
+      setting__toolbarTypeLabel: "Type de barre d\u2019outils",
+      setting__toolbarTypeDescription: "Cette option permet de changer l\u2019interface de la barre d\u2019outils de l\u2019\xE9diteur.",
+      setting__keyboardShortcuts: "Raccourcis clavier",
+      toolbarTypeDefault: "Par d\xE9faut",
+      toolbarTypeSidebar: "Barre lat\xE9rale",
+      toolbarTypeDropdown: "Menu d\xE9roulant",
+      styleMatchJoplin: "Identique \xE0 Joplin",
+      styleJsDrawLight: "Clair",
+      styleJsDrawDark: "Sombre",
+      images: "Images",
+      pdfs: "PDF",
+      allFiles: "Tous les fichiers",
+      loadLargePdf: (pageCount) => `Le fichier s\xE9lectionn\xE9 est un PDF volumineux (${pageCount} pages). Son chargement peut prendre du temps et augmenter la taille du dessin. Continuer ?`,
+      notAnEditableImage: (resourceId, resourceType) => `La ressource ${resourceId} n\u2019est pas une image modifiable. Impossible de modifier une ressource de type ${resourceType}.`
+    },
+    es: {
+      insertDrawing: "A\xF1ada dibujo",
+      restoreFromAutosave: "Resturar al autoguardado",
+      deleteAutosave: "Borrar el autoguardado",
+      noSuchAutosaveExists: "No autoguardado existe",
+      discardChanges: "Descartar cambios",
+      defaultImageTitle: "Dibujo",
+      edit: "Editar",
+      close: "Cerrar",
+      saveAndClose: "Guardar y cerrar",
+      overwriteExisting: "Sobrescribir existente",
+      saveAsNewDrawing: "Guardar como dibujo nuevo",
+      clickBelowToContinue: "Guardado. Ponga \xABok\xBB para continuar.",
+      discardUnsavedChanges: "\xBFDescartar cambios no guardados?",
+      resumeEditing: "Continuar editando",
+      saveAndResumeEditing: "Guardar y continuar editando"
+    },
+    hr: {
+      insertDrawing: "Umetni crte\u017E",
+      insertDrawingInNewWindow: "Umetni crte\u017E u novom prozoru",
+      restoreFromAutosave: "Obnovi iz automatski spremljenog crte\u017Ea",
+      deleteAutosave: "Izbri\u0161i sve automatski spremljene crte\u017Ee",
+      noSuchAutosaveExists: "Ne postoji automatski spremljeni crte\u017E",
+      discardChanges: "Odbaci promjene",
+      defaultImageTitle: "Prostoru\u010Dni crte\u017E",
+      edit: "Uredi",
+      close: "Zatvori",
+      saveAndClose: "Spremi i zatvori",
+      overwriteExisting: "Prepi\u0161i postoje\u0107e",
+      saveAsNewDrawing: "Spremi kao novi crte\u017E",
+      clickBelowToContinue: "Gotovo! Klikni dolje za nastavak.",
+      discardUnsavedChanges: "Odbaciti nespremljene promjene?",
+      resumeEditing: "Nastavi ure\u0111ivati",
+      saveAndResumeEditing: "Spremi i nastavi ure\u0111ivati",
+      saveChanges: "Spremi promjene",
+      exitInstructions: "Sve promjene su spremljene! Klikni dolje za izlaz.",
+      settingsPaneDescription: "Postavke ure\u0111iva\u010Da crte\u017Ea.",
+      setting__disableFullScreen: "Modus dijaloga",
+      setting__disableFullScreenDescription: "Uklju\u010Divanjem ove postavke \u0107e ure\u0111iva\u010D ispuniti samo dio Joplinovog prozora.",
+      setting__autosaveIntervalSettingLabel: "Interval automatskog spremanja (minute)",
+      setting__autosaveIntervalSettingDescription: "Prilago\u0111ava u\u010Destalost stvaranja sigurnosnih kopija trenuta\u010Dnog crte\u017Ea. Najnoviji automatski spremljeni crte\u017E se mo\u017Ee obnoviti pretra\u017Eivanjem \u201E:restore autosave\u201D u paleti naredbi (ctrl+shift+p ili cmd+shift+p na MacOS-u) i klikom na \u201EObnovi iz automatski spremljenog crte\u017Ea\u201D. Ako je ova postavka postavljena na nulu, automatska spremanja se izvode svake dvije minute.",
+      setting__themeLabel: "Tema",
+      setting__toolbarTypeLabel: "Vrsta alatne trake",
+      setting__toolbarTypeDescription: "Ova postavka omogu\u0107uje prebacivanje izme\u0111u mogu\u0107ih korisni\u010Dkih su\u010Delja alatnih traka za ure\u0111iva\u010D slika.",
+      setting__keyboardShortcuts: "Tipkovni pre\u010Daci",
+      toolbarTypeDefault: "Zadano",
+      toolbarTypeSidebar: "Bo\u010Dna traka",
+      toolbarTypeDropdown: "Padaju\u0107i izbornik",
+      styleMatchJoplin: "Uskladi s Joplinom",
+      styleJsDrawLight: "Svijetla",
+      styleJsDrawDark: "Tamna",
+      images: "Slike",
+      pdfs: "PDF-ovi",
+      allFiles: "Sve datoteke",
+      loadLargePdf: (pageCount) => `Jedna odabrana datoteka je veliki PDF (${pageCount} stranica). U\u010Ditavanje mo\u017Ee potrajati i pove\u0107ati veli\u010Dinu trenuta\u010Dnog crte\u017Ea. \u017Deli\u0161 li nastaviti?`,
+      notAnEditableImage: (resourceId, resourceType) => `Resurs ${resourceId} nije slika koja se mo\u017Ee ure\u0111ivati. Nije mogu\u0107e urediti resurs vrste ${resourceType}.`
+    },
+    ro: {
+      insertDrawing: "Insereaz\u0103 un desen",
+      insertDrawingInNewWindow: "Insereaz\u0103 un desen \xEEntr-o fereastr\u0103 nou\u0103",
+      restoreFromAutosave: "Restaureaz\u0103 dintr-un desen salvat automat",
+      deleteAutosave: "\u0218terge toate desenele salvate automat",
+      noSuchAutosaveExists: "Nicio salvare automat\u0103 nu exist\u0103",
+      discardChanges: "Anuleaz\u0103 modific\u0103rile",
+      defaultImageTitle: "Desen liber",
+      edit: "Editeaz\u0103",
+      close: "\xCEnchide",
+      saveAndClose: "Salveaz\u0103 \u0219i \xEEnchide",
+      overwriteExisting: "Suprascrie existent",
+      saveAsNewDrawing: "Salveaz\u0103 ca desen nou",
+      clickBelowToContinue: "Gata! F\u0103 clic mai jos pentru a continua.",
+      discardUnsavedChanges: "Anulezi modific\u0103rile nesalvate?",
+      resumeEditing: "Continu\u0103 editarea",
+      saveAndResumeEditing: "Salveaz\u0103 \u0219i continu\u0103 editarea",
+      saveChanges: "Salveaz\u0103 modific\u0103rile",
+      exitInstructions: "Toate modific\u0103rile au fost salvate! F\u0103 clic mai jos pentru a ie\u0219i.",
+      settingsPaneDescription: "Set\u0103ri pentru editorul de imagine liber.",
+      setting__disableFullScreen: "Mod dialog",
+      setting__disableFullScreenDescription: "Activarea acestei op\u021Biuni face ca editorul s\u0103 acopere doar par\u021Bial fereastra Joplin.",
+      setting__autosaveIntervalSettingLabel: "Interval salvare automat\u0103 (minute)",
+      setting__autosaveIntervalSettingDescription: 'Ajusteaz\u0103 c\xE2t de des se face o copie de siguran\u021B\u0103 a desenului curent. Cea mai recent\u0103 versiune salvat\u0103 automat poate fi restaurat\u0103 c\u0103ut\xE2nd dup\u0103 ":restore autosave" \xEEn paleta de comenzi (Ctrl+Shift+P sau Cmd+Shift+P pe MacOS) \u0219i f\u0103c\xE2nd clic pe \u201ERestaureaz\u0103 dintr-un desen salvat automat\u201D. Dac\u0103 acest\u0103 setare este 0, salv\u0103rile automate sunt create la fiecare 2 minute.',
+      setting__themeLabel: "Tem\u0103",
+      setting__toolbarTypeLabel: "Tip bar\u0103 de instrumente",
+      setting__toolbarTypeDescription: "Aceast\u0103 setare comut\u0103 \xEEntre posibilele interfe\u021Be pentru editorul de imagine.",
+      setting__keyboardShortcuts: "Scurt\u0103turi de la tastatur\u0103",
+      toolbarTypeDefault: "Implicit",
+      toolbarTypeSidebar: "Bar\u0103 lateral\u0103",
+      toolbarTypeDropdown: "Casete derulante",
+      styleMatchJoplin: "La fel ca Joplin",
+      styleJsDrawLight: "Luminoas\u0103",
+      styleJsDrawDark: "\xCEntunecat\u0103",
+      images: "Imagini",
+      pdfs: "PDF-uri",
+      allFiles: "Toate fi\u0219ierele",
+      loadLargePdf: (pageCount) => `Un fi\u0219ier PDF selectat este un fi\u0219ier mare (${pageCount} de pagini). \xCEnc\u0103rcarea lui ar putea dura ceva timp \u0219i s\u0103 creasc\u0103 dimensiunea desenului curent. Continui?`,
+      notAnEditableImage: (resourceId, resourceType) => `Resursa ${resourceId} nu este o imagine editabil\u0103. Nu se poate edita resursa de tipul ${resourceType}.`
+    },
+    sk: {
+      insertDrawing: "Vlo\u017Ei\u0165 kresbu",
+      insertDrawingInNewWindow: "Vlo\u017Ei\u0165 kresbu do nov\xE9ho okna",
+      restoreFromAutosave: "Obnovi\u0165 z automaticky ulo\u017Eenej kresby",
+      deleteAutosave: "Vymaza\u0165 v\u0161etky automaticky ulo\u017Een\xE9 kresby",
+      noSuchAutosaveExists: "Neexistuj\xFA \u017Eiadne automaticky ulo\u017Een\xE9",
+      discardChanges: "Zru\u0161i\u0165 zmeny",
+      defaultImageTitle: "Kresba vo\u013Enou rukou",
+      edit: "Upravi\u0165",
+      close: "Zavrie\u0165",
+      saveAndClose: "Ulo\u017Ei\u0165 a zavrie\u0165",
+      overwriteExisting: "Prep\xEDsa\u0165 existuj\xFAcu",
+      saveAsNewDrawing: "Ulo\u017Ei\u0165 ako nov\xFA kresbu",
+      clickBelowToContinue: "Hotovo! Kliknite ni\u017E\u0161ie pre pokra\u010Dovanie.",
+      discardUnsavedChanges: "Zru\u0161i\u0165 neulo\u017Een\xE9 zmeny?",
+      resumeEditing: "Pokra\u010Dova\u0165 v \xFAprave",
+      saveAndResumeEditing: "Ulo\u017Ei\u0165 a pokra\u010Dova\u0165 v \xFAprav\xE1ch",
+      saveChanges: "Ulo\u017Ei\u0165 zmeny",
+      exitInstructions: "V\u0161etky zmeny boli ulo\u017Een\xE9! Kliknite ni\u017E\u0161ie pre ukon\u010Denie.",
+      settingsPaneDescription: "Nastavenia pre grafick\xFD editor Kresba vo\u013Enou rukou.",
+      setting__disableFullScreen: "Dial\xF3gov\xFD re\u017Eim",
+      setting__disableFullScreenDescription: "Aktiv\xE1cia tohto nastavenia sp\xF4sob\xED, \u017Ee editor vypln\xED okno Joplin len \u010Diasto\u010Dne.",
+      setting__autosaveIntervalSettingLabel: "Interval automatick\xE9ho ukladania (v min\xFAtach)",
+      setting__autosaveIntervalSettingDescription: "Nastav\xED, ako \u010Dasto sa vytv\xE1ra z\xE1lo\u017En\xE1 k\xF3pia aktu\xE1lnej kresby. Posledn\xE9 automatick\xE9 ulo\u017Eenie je mo\u017En\xE9 obnovi\u0165 vyh\u013Eadan\xEDm \u201E:restore autosave\u201C v palete pr\xEDkazov (ctrl+shift+p alebo cmd+shift+p v syst\xE9me MacOS) a kliknut\xEDm na \u201EObnovi\u0165 z automaticky ulo\u017Eenej kresby\u201C. Ak je toto nastavenie nastaven\xE9 na nulu, automatick\xE9 ulo\u017Eenia sa vytv\xE1raj\xFA ka\u017Ed\xE9 dve min\xFAty.",
+      setting__themeLabel: "T\xE9ma",
+      setting__toolbarTypeLabel: "Typ panela n\xE1strojov",
+      setting__toolbarTypeDescription: "Toto nastavenie prep\xEDna medzi mo\u017En\xFDmi pou\u017E\xEDvate\u013Esk\xFDmi rozhraniami panela n\xE1strojov pre grafick\xFD editor.",
+      setting__keyboardShortcuts: "Kl\xE1vesov\xE9 skratky",
+      toolbarTypeDefault: "Predvolen\xE9",
+      toolbarTypeSidebar: "Bo\u010Dn\xFD panel",
+      toolbarTypeDropdown: "Rozba\u013Eovacie menu",
+      styleMatchJoplin: "Rovnak\xE1 ako Joplin",
+      styleJsDrawLight: "Svetl\xE1",
+      styleJsDrawDark: "Tmav\xE1",
+      images: "Obr\xE1zky",
+      pdfs: "PDF s\xFAbory",
+      allFiles: "V\u0161etky s\xFAbory",
+      loadLargePdf: (pageCount) => `Vybran\xFD s\xFAbor je ve\u013Ek\xFD PDF s\xFAbor (${pageCount} str\xE1n). Jeho na\u010D\xEDtanie m\xF4\u017Ee trva\u0165 nejak\xFD \u010Das a zv\xFD\u0161i\u0165 ve\u013Ekos\u0165 aktu\xE1lnej kresby. Pokra\u010Dova\u0165?`,
+      notAnEditableImage: (resourceId, resourceType) => `Zdroj ${resourceId} nie je upravite\u013En\xFD obr\xE1zok. Nie je mo\u017En\xE9 upravi\u0165 zdroj typu ${resourceType}.`
+    }
+  };
+  var localization;
+  var supportedLanguages = [];
+  var setLocaleInternal = (supportedLocales) => {
+    const languages = [...supportedLocales];
+    for (let language of supportedLocales) {
+      language = language.replace("_", "-");
+      const localeSep = language.indexOf("-");
+      if (localeSep !== -1) {
+        languages.push(language.substring(0, localeSep));
+      }
+    }
+    for (const locale of languages) {
+      if (locale in localizations) {
+        localization = localizations[locale];
+        break;
+      }
+    }
+    supportedLanguages = languages;
+  };
+  var localizationSet = false;
+  var setLocale = (supportedLocales) => {
+    if (typeof supportedLocales === "string") {
+      supportedLocales = [supportedLocales];
+    }
+    setLocaleInternal(supportedLocales);
+    localizationSet = true;
+  };
+  setLocale(navigator.languages);
+  var localization_default = new Proxy(defaultStrings, {
+    get(_target, prop) {
+      if (!localizationSet) {
+        console.warn(
+          "Accessing language data without a localization set. The default Electron locale will be used."
+        );
+      }
+      const propAsKey = prop;
+      return localization?.[propAsKey] ?? defaultStrings[propAsKey];
+    }
+  });
+
+  // src/constants.ts
+  var markdownItContentScriptId = "jsdraw__markdownIt_editDrawingButton";
+
+  // src/contentScripts/utils/makeImageEditable.ts
+  var hasFocus = (element) => {
+    return element.contains(document.activeElement);
+  };
+  var onEdit = (image) => {
+    if (!(image instanceof HTMLElement)) {
+      image = image.currentTarget;
+    }
+    const message = `edit:${image.getAttribute("src")}`;
+    webviewApi.postMessage(markdownItContentScriptId, message).catch((err) => {
+      console.error("Error posting message!", err, "\nMessage: ", message);
+    });
+  };
+  var makeImageEditable = (image, editLabel) => {
+    if (image.classList.contains("js-draw--skip")) return;
+    if (image.ondblclick === onEdit) return;
+    image.ondblclick = onEdit;
+    const addEditButton = () => {
+      const editButtonContainer = document.createElement("span");
+      const editButton = document.createElement("button");
+      const updateLabel = (label) => {
+        editButton.textContent = `${label} \u{1F58A}\uFE0F`;
+      };
+      editButton.ariaDescribedByElements = [image];
+      editButtonContainer.classList.add("jsdraw--editButton");
+      editButtonContainer.appendChild(editButton);
+      updateLabel("Edit");
+      void (async () => {
+        updateLabel(await editLabel);
+      })();
+      image.insertAdjacentElement("afterend", editButtonContainer);
+      const pointerSet = /* @__PURE__ */ new Set();
+      const updateVisibleState = () => {
+        const show = pointerSet.size > 0 || editButton.querySelector(":hover, :focus") || hasFocus(editButton) || hasFocus(image);
+        if (show) {
+          editButtonContainer.classList.add("-show");
+        } else {
+          editButtonContainer.classList.remove("-show");
+        }
+      };
+      const updatePositioning = () => {
+        const containerBox = editButtonContainer.getBoundingClientRect();
+        const imageBox = image.getBoundingClientRect();
+        editButton.style.right = `${imageBox.right - containerBox.right}px`;
+        editButton.style.top = `${imageBox.top - containerBox.top}px`;
+      };
+      image.addEventListener("pointerenter", (event) => {
+        pointerSet.add(event.pointerId);
+        updateVisibleState();
+        updatePositioning();
+      });
+      image.addEventListener("pointerleave", (event) => {
+        pointerSet.delete(event.pointerId);
+        updateVisibleState();
+      });
+      for (const item of [image, editButton]) {
+        item.addEventListener("focus", () => {
+          updateVisibleState();
+          updatePositioning();
+        });
+        item.addEventListener("blur", () => {
+          requestAnimationFrame(() => {
+            updateVisibleState();
+          });
+        });
+      }
+      editButton.onclick = () => {
+        onEdit(image);
+      };
+    };
+    const isRichTextEditor = document.body.classList.contains("mce-content-body") || document.body.id === "tinymce";
+    const hasWebViewApi = typeof webviewApi !== "undefined";
+    const isHtmlNote = !document.body.querySelector("#rendered-md");
+    if (isRichTextEditor || isHtmlNote) {
+      image.style.cursor = "pointer";
+    } else if (hasWebViewApi) {
+      addEditButton();
+    }
+  };
+  var makeImageEditable_default = makeImageEditable;
+
+  // src/contentScripts/markdownIt-content.ts
+  var initLocalePromise = null;
+  var initLocale = async () => {
+    if (initLocalePromise) {
+      return initLocalePromise;
+    }
+    const promise = (async () => {
+      const languages = await webviewApi.postMessage(markdownItContentScriptId, "get-locale:");
+      if (!Array.isArray(languages)) {
+        throw new Error(
+          `Invalid locale request response. Not an array: ${JSON.stringify(languages)}`
+        );
+      }
+      setLocale(languages);
+    })();
+    initLocalePromise = promise;
+    return promise;
+  };
+  var processImages = () => {
+    const images = document.querySelectorAll('img[src*=".svg"]');
+    for (const image of images) {
+      if (image.src.match(/^https?:/) || !image.src.match(/[a-z0-9]{32}[.]svg([?]t=\d+)?$/)) {
+        continue;
+      }
+      makeImageEditable_default(
+        image,
+        (async () => {
+          await initLocale();
+          return localization_default.edit;
+        })()
+      );
+    }
+  };
+  document.addEventListener("joplin-noteDidUpdate", () => {
+    processImages();
+  });
+  processImages();
+})();
+</script></script><style>pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em;
+}
+
+code.hljs {
+  padding: 3px 5px;
+}
+
+/*
+
+Atom One Light by Daniel Gamage
+Original One Light Syntax theme from https://github.com/atom/one-light-syntax
+
+base:    #fafafa
+mono-1:  #383a42
+mono-2:  #686b77
+mono-3:  #a0a1a7
+hue-1:   #0184bb
+hue-2:   #4078f2
+hue-3:   #a626a4
+hue-4:   #50a14f
+hue-5:   #e45649
+hue-5-2: #c91243
+hue-6:   #986801
+hue-6-2: #c18401
+
+*/
+
+.hljs {
+  color: #383a42;
+  background: #fafafa;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #a0a1a7;
+  font-style: italic;
+}
+
+.hljs-doctag,
+.hljs-keyword,
+.hljs-formula {
+  color: #a626a4;
+}
+
+.hljs-section,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+  color: #e45649;
+}
+
+.hljs-literal {
+  color: #0184bb;
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta .hljs-string {
+  color: #50a14f;
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+  color: #986801;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+  color: #4078f2;
+}
+
+.hljs-built_in,
+.hljs-title.class_,
+.hljs-class .hljs-title {
+  color: #c18401;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-link {
+  text-decoration: underline;
+}</style>
+						<title>08 - AAA</title>
+					</head>
+					<body>
+						<div class="exported-note"><div class="exported-note-title">08 - AAA</div>
+
+<style>
+		/* https://necolas.github.io/normalize.css/ */
+		html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}
+		article,aside,footer,header,nav,section{display:block}h1{font-size:2em;margin:.67em 0}hr{box-sizing:content-box;height:0;overflow:visible}
+		pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent;-webkit-text-decoration-skip:objects}
+		b,strong{font-weight:bolder}small{font-size:80%}img{border-style:none}
+
+		body {
+			font-size: 15px;
+			color: #32373F;
+			word-wrap: break-word;
+			line-height: 1.6em;
+			background-color: #ffffff;
+			font-family: 'Avenir Next', 'Avenir', 'Arial', sans-serif;
+			padding-bottom: 0px;
+			padding-top: 0px;
+		}
+		kbd {
+			border: 1px solid rgb(220, 220, 220);
+			box-shadow: inset 0 -1px 0 rgb(220, 220, 220);
+			padding: 2px 4px;
+			border-radius: 3px;
+			background-color: rgb(243, 243, 243);
+		}
+
+		:root {
+			--scrollbar-size: 7px;
+		}
+
+		::-webkit-scrollbar {
+			width: var(--scrollbar-size);
+			height: var(--scrollbar-size);
+		}
+		::-webkit-scrollbar-thumb {
+			border-radius: calc(var(--scrollbar-size) / 2);
+		}
+		::-webkit-scrollbar-corner {
+			background: none;
+		}
+		::-webkit-scrollbar-track {
+			border: none;
+		}
+		::-webkit-scrollbar-thumb {
+			background: rgba(50, 55, 63, 0.54); 
+		}
+		::-webkit-scrollbar-track:hover {
+			background: rgba(0, 0, 0, 0.1); 
+		}
+		::-webkit-scrollbar-thumb:hover {
+			background: rgba(50, 55, 63, 0.63); 
+		}
+
+		
+
+		/* Remove top padding and margin from first child so that top of rendered text is aligned to top of text editor text */
+
+		#rendered-md > h1:first-child,
+		#rendered-md > h2:first-child,
+		#rendered-md > h3:first-child,
+		#rendered-md > h4:first-child,
+		#rendered-md > ul:first-child,
+		#rendered-md > ol:first-child,
+		#rendered-md > table:first-child,
+		#rendered-md > blockquote:first-child,
+		#rendered-md > img:first-child,
+		#rendered-md > p:first-child {
+			margin-top: 0;
+			padding-top: 0;
+		}
+		
+		p, h1, h2, h3, h4, h5, h6, ul, table {
+			margin-top: .6em;
+			margin-bottom: 1.35em;
+
+			/*
+				Adds support for RTL text in the note body. It automatically detects the direction using the content.
+				Issue: https://github.com/laurent22/joplin/issues/3991
+			*/
+			unicode-bidi: plaintext;
+		}
+
+		h1, h2, h3, h4, h5, h6, ul, table {
+			margin-bottom: 0.65em;
+		}
+
+		h1, h2, h3, h4, h5, h6 {
+			line-height: 1.5em;
+		}
+		h1 {
+			font-size: 1.5em;
+			font-weight: bold;
+			border-bottom: 1px solid #dddddd;
+			padding-bottom: .3em;
+		}
+		h2 {
+			font-size: 1.3em;
+			font-weight: bold;
+			padding-bottom: .1em; */
+		}
+		h3 {
+			font-size: 1.1em;
+			font-weight: bold;
+		}
+		h4, h5, h6 {
+			font-size: 1em;
+			font-weight: bold;
+		}
+
+		.exported-note-title {
+			font-size: 2em;
+			font-weight: bold;
+			margin-bottom: 0.8em;
+			line-height: 1.5em;
+			padding-bottom: .35em;
+			border-bottom: 1px solid #dddddd;
+		}
+
+		a {
+			color: #155BDA;
+		}
+		ul, ol {
+			padding-left: 0;
+			margin-left: 1.7em;
+		}
+		li {
+			margin-bottom: .4em;
+		}
+		li p {
+			margin-top: 0.2em;
+			margin-bottom: 0;
+		}
+
+		dt {
+			font-weight: bold;
+			margin-bottom: 0.25em;
+		}
+
+		dd {
+			margin-inline-start: 2.5em;
+			margin-bottom: 0.5em;
+		}
+
+		.resource-icon {
+			display: inline-block;
+			position: relative;
+			top: 0.3em;
+			text-decoration: none;
+			width: 1.2em;
+			height: 1.4em;
+			margin-right: 0.4em;
+			background-color:  #155BDA;
+		}
+    /* These icons are obtained from the wonderful ForkAwesome project by copying the src svgs 
+     * into the css classes below.
+     * svgs are obtained from https://github.com/ForkAwesome/Fork-Awesome/tree/master/src/icons/svg
+     * instead of the svg width, height property you must use a viewbox here, 0 0 1536 1792 is typically the actual size of the icon
+     * each line begins with the pre-amble -webkit-mask: url("data:image/svg+xml;utf8,
+     * and of course finishes with ");
+     * to prevent artifacts it is also necessary to include -webkit-mask-repeat: no-repeat;
+     * on the following line
+     * */
+		.fa-joplin {
+			/* Awesome Font file */
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M373.834 128C168.227 128 0 296.223 0 501.834v788.336C0 1495.778 168.227 1664 373.834 1664h788.336c205.608 0 373.83-168.222 373.83-373.83V501.834C1536 296.224 1367.778 128 1162.17 128zm397.222 205.431h417.424a7.132 7.132 0 0 1 7.132 7.133v132.552c0 4.461-3.619 8.073-8.077 8.073h-57.23c-24.168 0-43.768 19.338-44.284 43.374v2.377h-.017v136.191h-.053l-.466 509.375c-5.02 77.667-39.222 149.056-96.324 201.046-60.28 54.834-141.948 85.017-229.962 85.017-12.45 0-25.208-.61-37.907-1.785-92.157-8.682-181.494-48.601-251.662-112.438-71.99-65.517-117.147-150.03-127.164-238-11.226-98.763 23.42-192.783 95.045-257.937 81.99-74.637 198.185-101.768 316.613-75.704 5.574 1.227 9.55 6.282 9.55 11.997v199.52c-.199 2.625-1.481 6.599-8.183 2.896-.663-.365-1.194-.511-1.653-.531-21.987-10.587-45.159-17.57-68.559-19.916-.38-.04-.757-.124-1.138-.163-.537-.048-1.034-.033-1.556-.075-4.13-.354-8.183-.517-12.203-.58-.87-.011-1.771-.127-2.641-.127-.486 0-.951.05-1.437.057-1.464.011-2.886.115-4.33.163-2.76.102-5.497.211-8.182.448-.273.024-.547.07-.835.097-25.509 2.4-47.864 11.104-65.012 25.47-.954.802-1.974 1.53-2.9 2.36a1.34 1.34 0 0 1-.168.146c-23.96 21.8-34.881 53.872-30.726 90.316 4.62 40.737 26.94 81.156 62.841 113.823 35.908 32.67 80.335 52.977 125.113 57.186 35.118 3.36 66.547-3.919 89.899-20.461a97.255 97.255 0 0 0 9.365-7.501c2.925-2.661 5.569-5.5 8.086-8.416.3-.348.672-.673.975-1.024 8.253-9.864 14.222-21.067 17.996-33.148.639-2.034 1.051-4.148 1.564-6.227.381-1.563.81-3.106 1.112-4.693.555-2.784.923-5.632 1.253-8.49.086-.709.183-1.414.237-2.128.492-4.893.693-9.858.55-14.91h.013V521.623c-2.01-22.626-20.78-40.434-43.928-40.434h-57.23a8.071 8.071 0 0 1-8.077-8.073V340.564a7.132 7.132 0 0 1 7.136-7.133z'/></svg>");
+		}
+		.fa-file-image {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zm-128-448v320H256v-192l192-192 128 128 384-384zm-832-192c-106 0-192-86-192-192s86-192 192-192 192 86 192 192-86 192-192 192z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-pdf {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zm-514-593c25 20 53 38 84 56 42-5 81-7 117-7 67 0 152 8 177 49 7 10 13 28 2 52-1 1-2 3-3 4v1c-3 18-18 38-71 38-64 0-161-29-245-73-139 15-285 46-392 83-103 176-182 262-242 262-10 0-19-2-28-7l-24-12c-3-1-4-3-6-5-5-5-9-16-6-36 10-46 64-123 188-188 8-5 18-2 23 6 1 1 2 3 2 4 31-51 67-116 107-197 45-90 80-178 104-262-32-109-42-221-24-287 7-25 22-40 42-40h22c15 0 27 5 35 15 12 14 15 36 9 68-1 3-2 6-4 8 1 3 1 5 1 8v30c-1 63-2 123-14 192 35 105 87 190 146 238zm-576 411c30-14 73-57 137-158-75 58-122 124-137 158zm398-920c-10 28-10 76-2 132 3-16 5-31 7-44 2-17 5-31 7-43 1-3 2-5 4-8-1-1-1-3-2-5-1-18-7-29-13-36 0 2-1 3-1 4zm-124 661c88-35 186-63 284-81-10-8-20-15-29-23-49-43-93-103-127-176-19 61-47 126-83 197-15 28-30 56-45 83zm646-16c-5-5-31-24-140-24 49 18 94 28 124 28 9 0 14 0 18-1 0-1-1-2-2-3z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-word {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zM233 768v107h70l164 661h159l128-485c5-15 8-30 10-46 1-8 2-16 2-24h4l3 24c3 14 4 30 9 46l128 485h159l164-661h70V768h-300v107h90l-99 438c-4 16-6 33-7 46l-2 21h-4c0-6-2-14-3-21-3-13-5-30-9-46L825 768H711l-144 545c-4 16-5 33-8 46l-4 21h-4l-2-21c-1-13-3-30-7-46l-99-438h90V768H233z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-powerpoint {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zm-992-234v106h327v-106h-93v-167h137c43 0 82-2 118-15 90-31 146-124 146-233s-54-193-137-228c-38-15-84-19-130-19H416v107h92v555h-92zm353-280H650V882h120c35 0 62 6 83 18 36 21 56 62 56 115 0 56-20 99-62 120-21 10-47 15-78 15z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-excel {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zm-979-234v106h281v-106h-75l103-161c12-19 18-34 21-34h2c1 4 3 7 5 10 4 8 10 14 17 24l107 161h-76v106h291v-106h-68l-192-273 195-282h67V768H828v107h74l-103 159c-12 19-21 34-21 33h-2c-1-4-3-7-5-10-4-7-9-14-17-23L648 875h76V768H434v107h68l189 272-194 283h-68z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-audio {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zM620 850c12 5 20 17 20 30v544c0 13-8 25-20 30-4 1-8 2-12 2-8 0-16-3-23-9l-166-167H288c-18 0-32-14-32-32v-192c0-18 14-32 32-32h131l166-167c10-9 23-12 35-7zm417 689c19 0 37-8 50-24 83-102 129-231 129-363s-46-261-129-363c-22-28-63-32-90-10-28 23-32 63-9 91 65 80 100 178 100 282s-35 202-100 282c-23 28-19 68 9 90 12 10 26 15 40 15zm-211-148c17 0 34-7 47-20 56-60 87-137 87-219s-31-159-87-219c-24-26-65-27-91-3-25 24-27 65-2 91 33 36 52 82 52 131s-19 95-52 131c-25 26-23 67 2 91 13 11 29 17 44 17z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-video {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zM768 768c70 0 128 58 128 128v384c0 70-58 128-128 128H384c-70 0-128-58-128-128V896c0-70 58-128 128-128h384zm492 2c12 5 20 17 20 30v576c0 13-8 25-20 30-4 1-8 2-12 2-8 0-17-3-23-9l-265-266v-90l265-266c6-6 15-9 23-9 4 0 8 1 12 2z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-archive {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M640 384V256H512v128h128zm128 128V384H640v128h128zM640 640V512H512v128h128zm128 128V640H640v128h128zm700-388c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H768v128H640V128H128v1536h1280zM781 943c85 287 107 349 107 349 5 17 8 34 8 52 0 111-108 192-256 192s-256-81-256-192c0-18 3-35 8-52 0 0 21-62 120-396V768h128v128h79c29 0 54 19 62 47zm-141 465c71 0 128-29 128-64s-57-64-128-64-128 29-128 64 57 64 128 64z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-code {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zM480 768c11-14 31-17 45-6l51 38c14 11 17 31 6 45l-182 243 182 243c11 14 8 34-6 45l-51 38c-14 11-34 8-45-6l-226-301c-8-11-8-27 0-38zm802 301c8 11 8 27 0 38l-226 301c-11 14-31 17-45 6l-51-38c-14-11-17-31-6-45l182-243-182-243c-11-14-8-34 6-45l51-38c14-11 34-8 45 6zm-620 461c-18-3-29-20-26-37l138-831c3-18 20-29 37-26l63 10c18 3 29 20 26 37l-138 831c-3 18-20 29-37 26z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-alt, .fa-file-csv {
+      /* fork-awesome doesn't have csv so we use the text icon */
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zM384 800c0-18 14-32 32-32h704c18 0 32 14 32 32v64c0 18-14 32-32 32H416c-18 0-32-14-32-32v-64zm736 224c18 0 32 14 32 32v64c0 18-14 32-32 32H416c-18 0-32-14-32-32v-64c0-18 14-32 32-32h704zm0 256c18 0 32 14 32 32v64c0 18-14 32-32 32H416c-18 0-32-14-32-32v-64c0-18 14-32 32-32h704z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		blockquote {
+			border-left: 4px solid rgb(220, 220, 220);
+			padding-left: 1.2em;
+			margin-left: 0;
+			opacity: 0.7;
+		}
+
+		.jop-tinymce table,
+		table {
+			text-align: left;
+			border-collapse: collapse;
+			border: 1px solid rgb(220, 220, 220);
+			background-color: #ffffff;
+		}
+
+		.jop-tinymce table td, .jop-tinymce table th,
+		table td, th {
+			text-align: left;
+			padding: .5em 1em .5em 1em;
+			font-size: 15;
+			color: #32373F;
+			font-family: 'Avenir Next', 'Avenir', 'Arial', sans-serif;
+		}
+
+		.jop-tinymce table td,
+		table td {
+			border: 1px solid rgb(220, 220, 220);
+		}
+
+		.jop-tinymce table th,
+		table th {
+			border: 1px solid rgb(220, 220, 220);
+			border-bottom: 2px solid rgb(220, 220, 220);
+			background-color: rgb(247, 247, 247);
+		}
+
+		.jop-tinymce table tr:nth-child(even),
+		table:has(thead) tr:nth-child(even) {
+			background-color: rgb(247, 247, 247);
+		}
+
+		.jop-tinymce table tr:hover,
+		table tr:hover {
+			background-color: #e5e5e5;
+		}
+
+		hr {
+			border: none;
+			border-bottom: 2px solid #dddddd;
+		}
+		img {
+			max-width: 100%;
+			height: auto;
+		}
+		
+		.inline-code,
+		.mce-content-body code {
+			border: 1px solid rgb(220, 220, 220);
+			background-color: rgb(243, 243, 243);
+			padding-right: .2em;
+			padding-left: .2em;
+			border-radius: .25em;
+			color: rgb(0,0,0);
+			font-size: .9em;
+		}
+
+		.highlighted-keyword {
+			background-color: #F3B717;
+			color: black;
+		}
+
+		
+	.not-loaded-resource img {
+		width: 1.15em;
+		height: 1.15em;
+		background: white;
+		padding: 2px !important;
+		border-radius: 2px;
+		box-shadow: 0 1px 3px #000000aa;
+	}
+
+	a.not-loaded-resource img {
+		margin-right: .2em;
+	}
+
+	a.not-loaded-resource {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+
+
+		.md-checkbox input[type=checkbox]:checked {
+			opacity: 0.7;
+		}
+
+		.jop-tinymce ul.joplin-checklist .checked,
+		.md-checkbox .checkbox-label-checked {
+			opacity: 0.5;
+		}
+
+		.exported-note {
+			padding: 1em;
+		}
+
+		.joplin-editable .joplin-source {
+			display: none;
+		}
+
+		mark {
+			background: #F7D26E;
+			color: black;
+		}
+
+		/* =============================================== */
+		/* For TinyMCE */
+		/* =============================================== */
+
+		.mce-content-body {
+			/* Note: we give a bit more padding at the bottom, to allow scrolling past the end of the document */
+			padding: 5px 10px 10em 0;
+		}
+
+		/*
+		.mce-content-body code {
+			background-color: transparent;
+		}
+		*/
+
+		.mce-content-body [data-mce-selected=inline-boundary] {
+			background-color: transparent;
+		}
+
+		.mce-content-body .joplin-editable {
+			cursor: pointer !important;
+		}
+
+		.mce-content-body.mce-content-readonly {
+			opacity: 0.5;
+		}
+
+		/* We need that to make sure click events have the A has a target */
+		.katex a span {
+			pointer-events: none;
+		}
+
+		.media-player {
+			width: 100%;
+			margin-top: 10px;
+		}
+
+		.media-player.media-pdf {
+			min-height: 35rem;
+			width: 100%;
+			max-width: 1000px;
+			margin: 0;
+			border: 0;
+			display: block;
+		}
+
+		/* Clear the CODE style if the element is within a joplin-editable block */
+		.mce-content-body .joplin-editable code {
+			border: none;
+			background: none;
+			padding: 0;
+			color: inherit;
+			font-size: inherit;
+		}
+
+		/* To make code blocks horizontally scrollable */
+		/* https://github.com/laurent22/joplin/issues/5740 */
+		pre.hljs {
+			overflow-x: auto;
+		}
+
+		.joplin-table-wrapper{
+			overflow-x: auto;
+			overflow-y: hidden;
+		}
+
+		/* =============================================== */
+		/* For TinyMCE */
+		/* =============================================== */
+
+		@media print {
+			body {
+				height: auto !important;
+			}
+
+			pre {
+				white-space: pre-wrap;
+			}
+
+			.code, .inline-code {
+				border: 1px solid #CBCBCB;
+			}
+
+			#joplin-container-content {
+				/* The height of the content is set dynamically by JavaScript (in updateBodyHeight) to go
+				   around various issues related to scrolling. However when printing we don't want this
+				   fixed size as that would crop the content. So we set it to auto here. "important" is
+				   needed to override the style set by JavaScript at the element-level. */
+				height: auto !important;
+			}
+		}
+	
+
+				.joplin-frontmatter-rendered {
+					margin-bottom: 1em;
+				}
+				.joplin-frontmatter-rendered pre.hljs {
+					margin: 0;
+					border-radius: 0;
+					white-space: pre-wrap;
+					word-break: break-word;
+				}
+				.joplin-frontmatter-marker {
+					margin: 0;
+					border: none;
+					border-top: 2px solid var(--joplin-divider-color, #ccc);
+				}
+			
+
+				/*
+					FOR THE MARKDOWN EDITOR
+				*/
+
+				/* Remove the indentation from the checkboxes at the root of the document
+				   (otherwise they are too far right), but keep it for their children to allow
+				   nested lists. Make sure this value matches the UL margin. */
+
+				li.md-checkbox {
+					list-style-type: none;
+				}
+
+				li.md-checkbox input[type=checkbox] {
+					margin-left: -1.71em;
+					margin-right: 0.7em;
+					position: relative;
+					top: 1px;
+				}
+				
+				ul.joplin-checklist {
+					list-style:none;
+				}
+
+				/*
+					FOR THE RICH TEXT EDITOR
+				*/
+
+				ul.joplin-checklist li::before {
+					content:"\f14a";
+					font-family:"Font Awesome 5 Free";
+					background-size: 16px 16px;
+					pointer-events: all;
+					cursor: pointer;
+					width: 1em;
+					height: 1em;
+					margin-left: -1.3em;
+					position: absolute;
+					color: #32373F;
+				}
+
+				.joplin-checklist li:not(.checked)::before {
+					content:"\f0c8";
+				}
+
+				.abc-notation-block svg {
+					background-color: white;
+				}
+				.joplin-abc-notation-rendered {
+					overflow-x: auto !important;
+					overflow-y: hidden;
+				}
+				@media print {
+					.joplin-abc-notation-rendered {
+						overflow: visible !important;
+					}
+
+					.joplin-abc-notation-rendered svg {
+						max-width: 100% !important;
+						height: auto !important;
+					}
+				}
+			
+.mermaid { width: 640px; }
+pre.mermaid[data-processed=true] { white-space: unset; }
+.mermaid-export-graph {
+					opacity: 0;
+					height: 0;
+					z-index: 1;
+					position: relative;
+				} 
+				.joplin-editable:hover .mermaid-export-graph,
+				.joplin-editable .mermaid-export-graph:has(:focus-visible) {
+					opacity: 1;
+				}
+				.mermaid-export-graph > button:hover {
+					background-color: #CBDAF1 !important;
+				}
+
+				.joplin-youtube-player-rendered {
+					width: 100%;
+					max-width: 100%;
+				}
+				.joplin-youtube-player-rendered iframe {
+					width: 100%;
+					aspect-ratio: 16 / 9;
+				}
+			</style><div id="rendered-md"><h1 id="authentication-authorization-and-accounting">Authentication, Authorization, and Accounting</h1>
+<p><sub class="jop-noMdConv">Source: <a data-from-md="" title="https://github.com/zonzorp/NETS1037/blob/main/Presentations/NETS1037-09-AAA.pdf" href="https://github.com/zonzorp/NETS1037/blob/main/Presentations/NETS1037-09-AAA.pdf">https://github.com/zonzorp/NETS1037/blob/main/Presentations/NETS1037-09-AAA.pdf</a></sub></p>
+<ul>
+<li>Authentication is the process of verifying the identity of an entity, whether that is a person,<br/>
+program, or machine</li>
+<li>Authorization is the granting of permission to access resources, run programs, and save or<br/>
+change data</li>
+<li>Accounting is the mechanism used to create, transmit, and store records describing activity</li>
+</ul>
+<h2 id="authentication">Authentication</h2>
+<p>Authenticating an entity does not grant privileges to the entity; it simply seeks to establish a reasonable level of confidence that the entity is who or what it claims to be.</p>
+<p>Authenticating an entity can take several forms. An entity can provide one or more of the following to demonstrate the validity of its identity claim:<br/>
+&bull; A login name or identifying string of characters, usually accompanied by a password or secret string associated with<br/>
+that name<br/>
+&bull; A certificate signed by a trusted authority<br/>
+&bull; A valid response to a challenge issued when an identity is claimed<br/>
+&bull; Physical or virtual possession of auxiliary information such as smart cards, dongles, or one-time code generators<br/>
+&bull; Biometric data unique to the entity when the entity is biological<br/>
+&bull; One or more pieces of information theoretically distinct to that device, such as the Ethernet address</p>
+<h2 id="authorization">Authorization</h2>
+<p>Authorization is the granting of permission to perform tasks or access resources based on one<br/>
+or more attributes of the entity requesting authorization. The primary attribute is the requester&apos;s identity; therefore, authentication precedes authorization in the normal processing of requests when the requester&apos;s identity is relevant. When the authorized activity requires identification but no requester identity is implemented, session identifiers are often used. Additional attributes may also be used, such as method of access, time of access, protocols used, other parties involved, and attributes of the requested resources.</p>
+<p>Some examples of implementations include:</p>
+<ul>
+<li>Resource and protocol without authentication
+<ul>
+<li>public web servers provide authorization to clients to access resources based on the protocol and the resources requested</li>
+</ul>
+</li>
+<li>Identity-based authorization after authentication
+<ul>
+<li>RBAC example: students and instructors authenticate to the same system, but authorization allows access to different resources on the system based on the specified roles</li>
+</ul>
+</li>
+<li>Session-based authorization after authentication
+<ul>
+<li>session cookies are stored in the web browser and are presented to the web server instead of re-authentication</li>
+</ul>
+</li>
+<li>Time-based authorization
+<ul>
+<li>Access to an exam is granted only within a certain period of time</li>
+</ul>
+</li>
+<li>Multi-Attribute Authorization
+<ul>
+<li>Banking App: requires authentication, requires a trusted device requires MFA, requires HTTPS with TLS 1.3, requires an allowed region (based on the geolocation of the client IP address)</li>
+</ul>
+</li>
+</ul>
+<h2 id="accounting">Accounting</h2>
+<p>Accounting is the process of tracking, recording, and auditing user activities and system resource usage to ensure accountability and support security monitoring. Accounting requires capturing information which describes the activity. At a minimum, access accounting typically includes authentication info, authorization(s) granted, access method and location, timestamps, and when that activity changed (e.g. login/logout, change privileges, etc.).<br/>
+Accounting may include statistical or detailed data about what was done while authorization was granted. The detail level is usually related to some type of activity we are interested in summarizing, such as total network traffic moved, or disk i/o caused, etc.<br/>
+<strong>Auditing</strong> is a highly detailed account of the level of specifically what was accessed, when, and the results of the access.</p>
+<h1 id="aaa-implementation-and-solutions">AAA Implementation and Solutions</h1>
+<p>AAA may be implemented using a single protocol or a single program or software package, or may be split between various systems. Windows Active Directory is an example of a non-integrated solution that handles authentication and authorization, but does not handle accounting on its own. The events are logged; however, log analyzers must be used to correlate events to make them useful. Additionally, Windows Active Directory does not record any detailed access and resource usage and must be combined with other tools such as Microsoft Sentinel or 3rd party products.</p>
+<p>Standalone servers provide login authentication locally. Authorization is done by user group membership and login shell, and accounting via tools such as <code class="inline-code">syslog</code> or direct service and application logging. Clients in small organizations typically use local per-host authentication/authorization, may replicate authentication/authorization between machines, or may use distributed authentication/authorization and usually ignore accounting.<br/>
+SMEs (Small and Medium Businesses) often implement Microsoft Active Directory only, using centralized authentication and ignoring accounting. Larger organizations use distributed AAA solutions via servers such as Cisco Access Control Server (ACS) accessing backend AAA services for edge access, and LDAP-based solutions for user access. Distributed AAA services are often provided by RADIUS or TACACS+ servers (Cisco solution).</p>
+<h2 id="entity-definitions-and-storage">Entity Definitions and Storage</h2>
+<p>A basic element of authentication is to determine how to identify entities in a useful way. Users may be defined by their user accounts in various ways (for example, by <code class="inline-code">UID</code> in Linux/Unix systems). Machines or devices can be identified by name, address, network, etc.<br/>
+These definitions are stored in a database. The database can be simple flat files (such as <code class="inline-code">/etc/passwd</code> and <code class="inline-code">/etc/shadow</code>), in distributed secure access databases (such as Active Directory or OpenLDAP), or in a database platform (such as MySQL/MariaDB). The identity stores and their access mechanisms are collectively referred to as <strong>Directory Services</strong>. Identity lookup programs (such as RADIUS) can be used with plug-ins to access these data sources.</p>
+<h2 id="openldap">OpenLDAP</h2>
+<p>OpenLDAP (Open Lightweight Directory Access Protocol) is an open-source implementation of the LDAP protocol used for managing and accessing directory information (such as users, groups, and authentication data) over a network. It includes a Directory Information Tree (DIT) and client tools to access that DIT. Entries to DIT are made in LDAP Data Interchange Format (LDIF).</p>
+<p>In Linux systems, the <code class="inline-code">slapd</code> package is the server and <code class="inline-code">ldap-utis</code> are the associated utilities. Changes to the database are natively done via CLI tools. There are GUI/WebUI tools available; for example, <a data-from-md="" title="https://webmin.com/docs/modules/ldap-server/" href="https://webmin.com/docs/modules/ldap-server/">Webmin</a> is popular, but there are many more, such as Apache Directory Studio as part of the <a data-from-md="" title="https://directory.apache.org/" href="https://directory.apache.org/">The Apache Directory&trade; Project</a>, <a data-from-md="" title="https://phpldapadmin.org/" href="https://phpldapadmin.org/">phpLDAPadmin</a>, <a data-from-md="" title="https://www.ldap-account-manager.org/lamcms/" href="https://www.ldap-account-manager.org/lamcms/">LDAP Account Manager (LAM)</a>, <a data-from-md="" title="https://www.fusiondirectory.org/en/" href="https://www.fusiondirectory.org/en/">FusionDirectory</a>, etc.</p>
+<h2 id="network-and-devices">Network and Devices</h2>
+<p>AAA can be applied to systems (devices and software), as well as users. For network edge user authentication, <a data-from-md="" title="https://en.wikipedia.org/wiki/RADIUS" href="https://en.wikipedia.org/wiki/RADIUS">RADIS</a> and <a data-from-md="" title="https://en.wikipedia.org/wiki/TACACS" href="https://en.wikipedia.org/wiki/TACACS">TACACS</a> are two protocols aimed at providing AAA to network devices or remote connections. TACACS is typically implemented to support Cisco devices in the network, and RADIUS is for most other AAA situations. Either one can use flat files, LDAP, or other directory services to provide user/machine definitions or store them in service-specific databases.</p>
+<p>TACACS (Terminal Access Controller Access-Control System) is a network authentication protocol used to control access to network devices such as routers and switches. TACACS+ is the modern and widely used version, which adds full encryption and more granular authorization. This protocol is mostly used for administrator access to networking equipment and is almost never used for user access.</p>
+<p><sub class="jop-noMdConv">Source: <a data-from-md="" title="https://networkradius.com/doc/FreeRADIUS%20Technical%20Guide.pdf" href="https://networkradius.com/doc/FreeRADIUS%20Technical%20Guide.pdf">The FreeRADIUS Technical Guide</a>:</sub><br/>
+RADIUS, which stands for &ldquo;Remote Authentication Dial-In User Service&rdquo;, is a network protocol for remote user authentication and accounting. RADIUS protocol serves three primary functions:</p>
+<ul>
+<li>Authenticates users or devices before allowing them access to a network</li>
+<li>Authorizes those users or devices for specific network services</li>
+<li>Accounts for and tracks the usage of those services</li>
+</ul>
+<p><sub class="jop-noMdConv">source: <a data-from-md="" title="https://en.wikipedia.org/wiki/TACACS#Comparison_with_RADIUS" href="https://en.wikipedia.org/wiki/TACACS#Comparison_with_RADIUS">https://en.wikipedia.org/wiki/TACACS#Comparison_with_RADIUS</a></sub><br/>
+Here is a quick comparison between RADIUS and TACACS+ protocols:</p>
+<div class="joplin-table-wrapper">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Feature</th>
+<th><strong>TACACS+</strong> (RFC 8907)</th>
+<th><strong>RADIUS</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Protocol Type</strong></td>
+<td>Cisco-developed (proprietary, but widely supported)</td>
+<td>Open standards (IETF)</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Transport Protocol</strong></td>
+<td>TCP (port 49)</td>
+<td>UDP (ports 1812, 1813, 1814 and 18120 by default), can use TCP (RFC6613) and TLS (RFC 6614), and DTLS (RFC7360)</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Encryption</strong></td>
+<td>Can encrypts entire payload, or use plain-text + IP Filtering for security</td>
+<td>Encrypts password field</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>AAA Separation</strong></td>
+<td>Fully separates authentication, authorization, accounting (more granular, down to commands)</td>
+<td>Combines authentication + authorization</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Use Case</strong></td>
+<td>Network device administration (routers, switches)</td>
+<td>User/Device Network access (Wi-Fi, VPN)</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Vendor Support</strong></td>
+<td>Primarily for Cisco switches and routers, only for administrator access to networking equipment</td>
+<td>Widely supported (multi-vendor), can be modified to extend functionality or support any type of security technology</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Deployment</strong></td>
+<td>Robust functionality for administrator authentication and command authorization, but is not used for authenticating end-user access to networks</td>
+<td>Offers minimal functionality for administrator authentication and command authorization, while offering strong support (and is widely used) for end-user authentication, authorization, and accounting</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="radius-protocol">RADIUS Protocol</h1>
+<p><sub class="jop-noMdConv">Source: <a data-from-md="" title="https://networkradius.com/doc/FreeRADIUS%20Technical%20Guide.pdf" href="https://networkradius.com/doc/FreeRADIUS%20Technical%20Guide.pdf">The FreeRADIUS Technical Guide</a>:</sub><br/>
+RADIUS Components:</p>
+<div class="joplin-table-wrapper">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Component Name</th>
+<th>Functions</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">User/Device</td>
+<td>Requests access to the network.</td>
+<td>Laptop, ADSL Modem, VOIP Phone</td>
+</tr>
+<tr>
+<td style="text-align:left">Network Access Server (NAS)</td>
+<td>Provides access to the network for the user/device (gateway)</td>
+<td>Switch, Wireless Access Point, DSLAM (Digital Subscriber Line Access Multiplexer), VPN Terminator</td>
+</tr>
+<tr>
+<td style="text-align:left">Authentication Server</td>
+<td>Receives authentication requests from the NAS, Returns authentication results to the NAS, Optionally requests user and configuration information from the database or directory, May return configuration parameters to the NAS, Receives accounting information from the NAS</td>
+<td>FreeRADIUS, Radiator, NPS (Microsoft&apos;s RADIUS Server), ACS (Cisco Secure Access Control Server)</td>
+</tr>
+<tr>
+<td style="text-align:left">Data Store</td>
+<td>Optional database or directory with user authentication and authorization information. RADIUS server communicates with the data store using DB API or LDAP.</td>
+<td>SQL Database, Kerberos Service Server, LDAP Directory</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><sub class="jop-noMdConv">source:&nbsp;<a data-from-md="" title="https://en.wikipedia.org/wiki/RADIUS#Authentication_and_authorization" href="https://en.wikipedia.org/wiki/RADIUS#Authentication_and_authorization">https://en.wikipedia.org/wiki/RADIUS#Authentication_and_authorization</a></sub></p>
+<ul>
+<li>The user or machine sends a request to a Network Access Server (NAS) to gain access to a particular network resource using access credentials.</li>
+<li>NAS sends a RADIUS Access Request message to the RADIUS server, requesting authorization to grant access via the RADIUS protocol.</li>
+<li>RADIUS server checks that the information is correct using authentication schemes such as PAP, CHAP or EAP.
+<ul>
+<li>The user&apos;s proof of identification is verified, along with, optionally, other information related to the request, such as the user&apos;s network address or phone number, account status, and specific network service access privileges</li>
+<li>The RADIUS server has no control over the content of the request that the NAS sends</li>
+</ul>
+</li>
+<li>The RADIUS server returns one of three responses to the NAS:
+<ul>
+<li>Access Reject: The user is unconditionally denied access to all requested network resources</li>
+<li>Access Challenge: Requests additional information from the user, such as a secondary password, PIN, token, or card.
+<ul>
+<li>Access Challenge is also used in more complex authentication dialogues where a secure tunnel is established between the user&apos;s machine and the RADIUS Server in a way that the access credentials are hidden from the NAS</li>
+</ul>
+</li>
+<li>Access Accept: The user is granted access.</li>
+</ul>
+</li>
+<li>Authorization attributes are conveyed to the NAS stipulating the terms of access to be granted</li>
+<li>The NAS will send an &quot;Accounting Start&quot; packet to the RADIUS server for Accounting
+<ul>
+<li>The &quot;Start&quot; records typically contain the user&apos;s identification, network address, point of attachment and a unique session identifier.</li>
+</ul>
+</li>
+<li>The NAS will periodically send an &quot;Interim Update&quot; record to the RADIUS server
+<ul>
+<li>&quot;Interim&quot; records convey the current session duration and information on current data usage</li>
+</ul>
+</li>
+<li>The NAS issues a final Accounting &quot;Stop&quot; record to the RADIUS server when the connection is terminated, or the session ends
+<ul>
+<li>information on the final usage in terms of time, packets transferred, data transferred, reason for disconnect and other information related to the user&apos;s network access</li>
+</ul>
+</li>
+</ul>
+<p>For more detailed information, see the <a data-from-md="" title="https://en.wikipedia.org/wiki/RADIUS#" href="https://en.wikipedia.org/wiki/RADIUS">Wikipedia article on RADIUS</a>.</p>
+<h2 id="blastradius-attack-and-protocol-vulnerability-cve-2024-3596">BlastRADIUS Attack and Protocol Vulnerability (CVE-2024-3596)</h2>
+<p><sub class="jop-noMdConv">Source: <a data-from-md="" title="https://www.blastradius.fail/" href="https://www.blastradius.fail/">https://www.blastradius.fail/</a></sub><br/>
+The RADIUS protocol predates modern cryptographic guarantees and is typically unencrypted and unauthenticated. The RADIUS protocol uses UDP by default and passwords are encrypted using MD5 hash function. The Blast-RADIUS attack allows a man-in-the-middle attacker between the RADIUS client and server to forge a valid protocol accept message in response to a failed authentication request. This forgery could give the attacker access to network devices and services without the attacker guessing or brute forcing passwords or shared secrets.</p>
+<ul>
+<li>The attacker does not learn user credentials.</li>
+<li>The attacker needs access to the RADIUS network</li>
+<li>The attacker must compute MD5 hash and find collisions successfully within the configured timeout (usually 30 to 60 sec by default)</li>
+</ul>
+<p>The detection of the attack requires correlating <code class="inline-code">Access-Rejects</code> messages logs on the RADIUS server and <code class="inline-code">Access-Accepts</code> on the RADIUS client.</p>
+<p>The mitigation involves a change in the RADIUS implementations to require sending <code class="inline-code">Message-Authenticator</code> attributes for all requests and responses. This requirement is being added to the IETF RFC to be made standard. FreeRADIUS and other vendors may have already implemented such requirements (see <a data-from-md="" title="https://www.inkbridgenetworks.com/blastradius" href="https://www.inkbridgenetworks.com/blastradius">https://www.inkbridgenetworks.com/blastradius</a>).</p>
+<p>The long-term solution is to use an authenticated and encrypted channel for RADIUS such as TLS or DTLS instead of the plain UDP. Additionally, it is expected that most enterprises will route RADIUS traffic to the server over a separate management network to reduce the likelihood of access to RADIUS traffic.</p>
+<h1 id="freeradius">FreeRADIUS</h1>
+<p>FreeRADIUS is the most popular and the most widely deployed open-source RADIUS server in the world. FreeRADIUS is designed to be modular, extensible, and scalable. It provides all aspects of AAA and supports additional plug-ins to link to other databases and services such as MySQL, PostgreSQL, LDAP, or Microsoft Active Directory.</p>
+<h2 id="linux-installation-and-configuration">Linux Installation and Configuration:</h2>
+<ul>
+<li>Installation of the <code class="inline-code">freeradius</code> package also automatically generates the required server certificates.</li>
+<li>Listens on UDP ports 1812, 1813, 1814 and 18120 by default</li>
+<li>Configuration is in <code class="inline-code">/etc/freeradius</code>
+<ul>
+<li><code class="inline-code">radiusd.conf</code> is the primary configuration file for the service</li>
+<li><code class="inline-code">clients.conf</code> defines which authenticators can access the server and what the shared secrets are for them</li>
+<li>The <code class="inline-code">users</code> file defines who can authenticate and what their authorizations are</li>
+<li><code class="inline-code">acct_users</code> defines the accounting records to keep</li>
+</ul>
+</li>
+</ul>
+<p>An example of extensibility is using RADIUS authentication to log into a Linux system locally or via SSH. This is not common; however, it demonstrates using an existing RADIUS server to authenticate and authorize a user.</p>
+<ul>
+<li>install <code class="inline-code">libpam-radius-auth</code> package (installs <code class="inline-code">pam_radius</code> module under <code class="inline-code">/lib/security</code>)</li>
+<li>Configure your users in the <code class="inline-code">/etc/freeradius/users</code> file</li>
+<li>Add <code class="inline-code">pam_radius.so</code> to the authentication methods in the <code class="inline-code">/etc/pam.d/application</code> configuration  files</li>
+<li>Give consideration to how your RADIUS traffic is secured if your RADIUS server is not localhost (can be partially encrypted, use TLS with certificates, or tunnelled)</li>
+</ul>
+<p><sub class="jop-noMdConv">v 1.0 2026-06-01</sub></p>
+</div></div>
+					</body>
+				</html>
+			
