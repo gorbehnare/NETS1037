@@ -7,7 +7,7 @@
 - [05 - SNMP](./05%20-%20SNMP.html)
 - [06 - SNMP Traps](./06%20-%20SNMP%20Traps.html)
 - [07 - NetFlow and IPFIX](./07%20-%20NetFlow%20and%20IPFIX.html)
-- [08 - AAA](./8%20-%20AAA.html)
+- [08 - AAA](./08%20-%20AAA.html)
 
 ## Assignments and Labs:
 - [Lab 01 - Networks Creation](./labs/Lab%2001%20-%20Networks%20Creation.html)
