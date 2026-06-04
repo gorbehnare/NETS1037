@@ -16,6 +16,7 @@
 - [Lab 04 - SNMP](./labs/Lab%2004%20-%20SNMP.html)
 - [Lab 05 - SNMP Traps](./labs/Lab%2005%20-%20SNMP%20Traps.html)
 - [Lab 06 - NetFlow](./labs/Lab%2006%20-%20NetFlow.html)
+- [Lab 07 - AAA using FreeRADIUS](./labs/Lab%2007%20-%20AAA%20using%20FreeRADIUS.html)
 
 ## Projects:
 - [Project - The ELK Stack](./labs/Project%20-%20The%20ELK%20Stack.html)
