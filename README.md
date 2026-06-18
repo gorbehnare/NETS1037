@@ -9,6 +9,7 @@
 - [07 - NetFlow and IPFIX](./07%20-%20NetFlow%20and%20IPFIX.html)
 - [08 - AAA](./08%20-%20AAA.html)
 - [09 - Network Discovery](./09%20-%20Network%20Discovery.html)
+- [10 - Proxy Services](./10%20-%20Proxy%20Services.html)
 
 ## Assignments and Labs:
 - [Lab 01 - Networks Creation](./labs/Lab%2001%20-%20Networks%20Creation.html)
