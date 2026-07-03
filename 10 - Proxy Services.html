@@ -1084,8 +1084,7 @@ A proxy server can be used for several distinct purposes:</p>
 <li>to cache web resources locally for performance or data transfer reduction (basic, most<br/>
 common setup)</li>
 <li>to provide controlled access to protected resources (reverse proxy scenario)</li>
-<li>to conceal the identity of an end-user&apos;s host from the target server (the tor<br/>
-network uses a network of proxies to hide users)</li>
+<li>to conceal the identity of an end-user&apos;s host from the target server (the Tor network uses a network of proxies to hide users)</li>
 <li>to restrict network traffic to specific choke points for traffic measurement and<br/>
 management purposes</li>
 <li>to modify or reroute traffic before delivering it to clients or servers (advanced<br/>
@@ -1138,13 +1137,13 @@ Different proxy roles map to different outcomes:</p>
 </div>
 <p>A forward proxy is an effective tool for logging and monitoring outbound traffic. Clients can connect to the proxy explicitly through browser or operating system proxy settings, or through automatic configuration using PAC/WPAD. In an enterprise network, traffic can also be transparently redirected at the network layer (L3/L4) using advanced switches and routers (e.g., policy-based routing) or proxy software (e.g., Squid with TPROXY), without requiring any client-side configuration.</p>
 <p><sub class="jop-noMdConv">Source: <a data-from-md="" title="https://en.wikipedia.org/wiki/Web_Proxy_Auto-Discovery_Protocol" href="https://en.wikipedia.org/wiki/Web_Proxy_Auto-Discovery_Protocol">Wikipedia Article on WPAD</a>:</sub><br/>
-PAC (<a data-from-md="" title="https://en.wikipedia.org/wiki/Proxy_auto-config" href="https://en.wikipedia.org/wiki/Proxy_auto-config">Proxy Auto-Config</a>) and WPAD (<a data-from-md="" title="https://en.wikipedia.org/wiki/Web_Proxy_Auto-Discovery_Protocol" href="https://en.wikipedia.org/wiki/Web_Proxy_Auto-Discovery_Protocol">Web Proxy Auto-Discovery Protocol</a>) are methods used to automatically configure proxy settings for web browsers:</p>
+PAC (<a data-from-md="" title="https://en.wikipedia.org/wiki/Proxy_auto-config" href="https://en.wikipedia.org/wiki/Proxy_auto-config">Proxy Auto-Config</a>) and WPAD (<a data-from-md="" title="https://en.wikipedia.org/wiki/Web_Proxy_Auto-Discovery_Protocol" href="https://en.wikipedia.org/wiki/Web_Proxy_Auto-Discovery_Protocol">Web Proxy Auto-Discovery Protocol</a>) are methods used to configure proxy settings for web browsers automatically:</p>
 <ul>
 <li>Proxy auto-config (PAC) standard: create and publish one central proxy configuration file.</li>
 <li>Web Proxy Auto-Discovery Protocol (WPAD) standard: ensure that an organization&apos;s browsers will find this file without manual configuration.</li>
 </ul>
 <h2 id="caching">Caching</h2>
-<p>Another use case for web (HTTP/HTTPS) proxy servers is caching. Caching locally stores frequently accessed content, such as web pages, files, images, or other resources served from the internet, and subsequently serves the cached content to clients to reduce latency, improve transfer speeds, and conserve internet bandwidth.</p>
+<p>Another use case for web (HTTP/HTTPS) proxy servers is caching. Caching locally stores frequently accessed content, such as web pages, files, images, or other resources served from the internet, and then serves it to clients to reduce latency, improve transfer speeds, and conserve internet bandwidth. For more detailed technical information, refer to <a data-from-md="" title="https://www.rfc-editor.org/rfc/rfc9111.html" href="https://www.rfc-editor.org/rfc/rfc9111.html">RFC 9111</a>.</p>
 <p>The cache hit ratio is the proportion of client requests served from the cache compared to those forwarded to the internet source. A cache hit generally means that content is served instantly from local storage without routing the request to the origin server or downloading it again from the internet. This function has traditionally been used to improve performance on slower internet connections.</p>
 <p>As another use-case example, caching is valuable in large network environments where many systems need to download the same files, such as software patches or updates. With local caching, files are downloaded from the internet only once, and subsequent client requests are served over the local network.</p>
 <p>Some proxy software provides more control over caching than others. Depending on the software, various aspects of caching can be configured:</p>
@@ -1155,13 +1154,13 @@ PAC (<a data-from-md="" title="https://en.wikipedia.org/wiki/Proxy_auto-config" 
 </ul>
 </li>
 <li>Retention policies and cache invalidation, including TTL (Time to Live expiration), LRU (Least Recently Used) eviction, storage quotas, and cache purging</li>
-<li>Cache performance optimization, such as distributed caching, compression, and automated responses based on monitoring metrics (e.g., adjusting TTL or triggering cache purges based on cache hit/miss ratios)c.</li>
+<li>Cache performance optimization, such as distributed caching, compression, and automated responses based on monitoring metrics (e.g., adjusting TTL or triggering cache purges based on cache hit/miss ratios).</li>
 </ul>
 <p>Caching servers must be sized appropriately, with adequate memory, CPU, and storage resources, so they do not introduce bottlenecks in network performance.</p>
-<p>A CDN (Content Delivery Network) can be categorized as a set of gateway cache servers (each gateway consisting of a cluster of servers depending on the scale of the CDN). These gateway caches sit between the origin server and the internet. Responses to clients are served by the CDN based on geographic location, latency, and other bandwidth considerations, with requests forwarded to the origin server only in the case of a cache miss.</p>
+<p>A CDN (Content Delivery Network) can be categorized as a set of gateway cache servers (each gateway consisting of a cluster of servers, depending on the scale of the CDN). These gateway caches sit between the origin server and the Internet. Responses to clients are served by the CDN based on geographic location, latency, and other bandwidth considerations, with requests forwarded to the origin server only in the case of a cache miss. A CDN can also provide additional functions and protections such as TLS termination, load balancing, DDoS mitigation/protection and application acceleration.</p>
 <p>Web admins can use specific HTTP headers that can inform the cache servers about some aspects of caching for their content:</p>
 <ul>
-<li>The HTTP <code class="inline-code">Expires</code> header specifies how long the response is considered &quot;fresh&quot; (after which it becomes &quot;stale&quot;)</li>
+<li>The HTTP <code class="inline-code">Expires</code> header specifies the date and time after which a cached response should be considered stale.</li>
 <li>The HTTP <code class="inline-code">Cache-Control</code> header allows finer control through directives such as <code class="inline-code">max-age</code>, <code class="inline-code">max-stale</code>, <code class="inline-code">min-fresh</code>, <code class="inline-code">no-cache</code>, and <code class="inline-code">no-store</code></li>
 </ul>
 <p>For more information, see documentation such as the one from <a data-from-md="" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cache-Control" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cache-Control">Mozilla Developer Documentation for Cache-Control header</a>.</p>
@@ -1209,11 +1208,11 @@ Deploying a forward proxy for egress inspection provides network and security te
 <p><strong>Recommendation:</strong> Start with explicit proxy via PAC/WPAD for corporate devices (enables identity-aware logging), then add transparent interception only where you can&rsquo;t guarantee configuration (guest/IoT VLANs).</p>
 <h2 id="squid">Squid</h2>
 <p><sub class="jop-noMdConv">Source: <a data-from-md="" title="https://github.com/zonzorp/NETS1037/blob/main/Presentations/NETS1037-07-ProxyServices.pdf" href="https://github.com/zonzorp/NETS1037/blob/main/Presentations/NETS1037-07-ProxyServices.pdf">https://github.com/zonzorp/NETS1037/blob/main/Presentations/NETS1037-07-ProxyServices.pdf</a></sub><br/>
-Squid is a proxy server which has been around since the mid 1990&apos;s (<a data-from-md="" title="https://www.squid-cache.org/" href="https://www.squid-cache.org/">squid-cache.org</a>). <code class="inline-code">OPNSense</code>, <code class="inline-code">pfsense</code>, and others have the ability to run <code class="inline-code">squid</code> as part of the gateway. Squid can also be installed on any Windows, Linux, or Unix server to provide proxy services. Other extensions and software can provide additional functionality (For example, <code class="inline-code">ClamAV</code> can be used to add signature-based anti-virus scanning). Consider blocking outbound direct traffic from the LAN to HTTP on the internet to force internal hosts to use the proxy for HTTP to the web. Squid is licensed under GNU GPL.</p>
+Squid is a proxy server which has been around since the mid-1990s (<a data-from-md="" title="https://www.squid-cache.org/" href="https://www.squid-cache.org/">squid-cache.org</a>). <code class="inline-code">OPNSense</code>, <code class="inline-code">pfSense</code>, and others can run <code class="inline-code">squid</code> as part of the gateway. Squid can also be installed on any Windows, Linux, or Unix server to provide proxy services. Other extensions and software can provide additional functionality (For example, <code class="inline-code">ClamAV</code> can be used to add signature-based anti-virus scanning). Consider blocking outbound direct traffic from the LAN to HTTP on the internet to force internal hosts to use the proxy for HTTP to the web. Squid is licensed under the GNU GPL.</p>
 <ul>
 <li>On Ubuntu and Debian, installation is simple from repositories: <code class="inline-code">sudo apt install squid</code></li>
-<li>The main configuration file is under <code class="inline-code">/etc/squid3/squid.conf</code>, which also contains the documentation.</li>
-<li>Most default configurations are enough to start a simple HTTP caching proxy, but you must provide the <code class="inline-code">acl</code> and <code class="inline-code">http_access</code> settings.</li>
+<li>The main configuration file is under <code class="inline-code">/etc/squid/squid.conf</code>, which also contains the documentation.</li>
+<li>Most default configurations are enough to start a simple HTTP caching proxy, but you should provide the <code class="inline-code">acl</code> and <code class="inline-code">http_access</code> settings to define your allowed local networks.</li>
 <li>The default port is set to <code class="inline-code">3128</code>, but many browsers default to <code class="inline-code">8080</code>, so the port number is a configuration to be aware of on the server and the clients
 <ul>
 <li>Port <code class="inline-code">8080</code> is used for content control software such as <code class="inline-code">dansguardian</code>, or <code class="inline-code">e2guardian</code></li>
@@ -1225,7 +1224,7 @@ Squid is a proxy server which has been around since the mid 1990&apos;s (<a data
 <li>Some basic info can be retrieved by using the menu at <code class="inline-code">http://proxyhost:3128/squid-internal-mgr/menu</code> and replacing the word <code class="inline-code">menu</code> in that URL with a choice from the page retrieved by the menu URL</li>
 </ul>
 </li>
-<li>Squid keeps logs in <code class="inline-code">/var/log/squid3</code>
+<li>Squid keeps logs in <code class="inline-code">/var/log/squid</code>
 <ul>
 <li><code class="inline-code">access.log</code> shows traffic served</li>
 <li><code class="inline-code">cache.log</code> gives cache management details</li>
@@ -1233,7 +1232,7 @@ Squid is a proxy server which has been around since the mid 1990&apos;s (<a data
 </li>
 </ul>
 <h1 id="http-vs-https-inspection">HTTP vs. HTTPS Inspection</h1>
-<p>Since most, if not all, web traffic is encrypted using HTTPS, a forward proxy can only inspect a limited set of metadata, such as SNI (Server Name Indication), client fingerprint (using methods such as JA3 and JA4), and cert issuer. However, after the TLS handshake is complete, the traffic contents and the exact URLs and paths are no longer visible.</p>
+<p>Since the vast majority of modern web traffic is encrypted using HTTPS, a forward proxy can only inspect a limited set of metadata, such as SNI (Server Name Indication), client fingerprint (using methods such as JA3 and JA4), and cert issuer. Without HTTPS interception, the proxy generally cannot view encrypted HTTP request content such as URLs, paths, headers, or payloads beyond metadata available during connection establishment. Additionally, in TLS 1.3, visibility into SNI is further reduced when ECH (Encrypted Client Hello) is used.</p>
 <p>Inspecting traffic without breaking HTTPS is still useful. The following are examples of the level of visibility that a simple forward or transparent proxy provides:</p>
 <ul>
 <li>Top destinations by domain or SNI
@@ -1244,7 +1243,7 @@ Squid is a proxy server which has been around since the mid 1990&apos;s (<a data
 </li>
 <li>TLS posture (cipher versions used)
 <ul>
-<li>Use of other/older TLS protocols is referred to as &quot;TLS Posture Drift&quot;.</li>
+<li>Deviations from an organization&apos;s approved TLS configuration (e.g., deprecated protocol versions or weak cipher suites) are sometimes described as TLS posture drift in security monitoring programs.</li>
 </ul>
 </li>
 <li>JA3 and JA4 client fingerprinting
@@ -1269,15 +1268,18 @@ Inspecting the content of HTTPS requires an MITM (Man-In-The-Middle) proxy, with
 <li>MITM proxy passes the request on to the server over the TLS connection initiated in step 4.</li>
 </ol>
 <p>The MITM proxy now has access to all unencrypted traffic and can perform inspection.</p>
-<p>It is noteworthy to know that HTTPS can also be intercepted when using a transparent proxy, where a router is involved in forwarding connections. This requires tighter integration between the router and the proxy software since the proxy will need to know the <code class="inline-code">SNI</code> from the initial request, which was sent to the router by the client before the redirection. It is also important to note that the HTTPS MITM is generally not possible unless a matching trusted CA certificate is installed on all the clients.</p>
+<p>It is worth noting that HTTPS can also be intercepted when using a transparent proxy, where a router is involved in forwarding connections. This requires tighter integration between the router and the proxy software since the proxy must be able to observe the <code class="inline-code">TLS ClientHello</code> message after the connection has been redirected, and extract the <code class="inline-code">SNI</code> value before establishing the intercepted TLS session.</p>
+<p>It is also important to note that the HTTPS MITM is generally not possible unless a matching trusted CA certificate is installed on all the clients.</p>
+<h2 id="quic-and-http3-considerations">QUIC and HTTP/3 Considerations</h2>
+<p>Modern web traffic is increasingly using HTTP/3, which operates over <a data-from-md="" title="https://en.wikipedia.org/wiki/QUIC" href="https://en.wikipedia.org/wiki/QUIC">QUIC</a> (UDP port 443) rather than the traditional TCP-based HTTP/1.1 and HTTP/2 protocols. Because many legacy proxy and security monitoring solutions were designed around TCP and TLS interception, HTTP/3 can reduce visibility and complicate traffic inspection, filtering, and logging. Organizations deploying forward proxies often disable or block QUIC at network boundaries, causing clients to fall back to HTTP/2 over TCP, where existing proxy controls and TLS inspection technologies are more mature. As HTTP/3 adoption continues to grow across major web services, proxy administrators should verify that their monitoring, filtering, and security tools explicitly support QUIC and HTTP/3 traffic to avoid visibility gaps and inconsistent policy enforcement.</p>
 <h1 id="proxy-uses-and-abuses">Proxy Uses and Abuses</h1>
 <p>We have discussed ethical and legal considerations for logging and monitoring in earlier course content. Proxy servers are extremely useful because they provide application-layer logging and monitoring and support a wide range of security functions, from content filtering to threat detection and response. However, any tool can also be subject to abuse. Here are some (non-comprehensive) considerations when designing systems or deploying proxies:</p>
 <ul>
 <li>Interception of encrypted traffic may be illegal in some jurisdictions, while in others it may be required by law.
 <ul>
-<li>For example, see the <a data-from-md="" title="https://en.wikipedia.org/wiki/Kazakhstan_man-in-the-middle_attack" href="https://en.wikipedia.org/wiki/Kazakhstan_man-in-the-middle_attack">Wikipedia article on Kazakhstan man-in-the-middle attacks</a>, which describes the government&apos;s attempts to require the installation of a government-issued root CA certificate by users
+<li>For example, see the <a data-from-md="" title="https://en.wikipedia.org/wiki/Kazakhstan_man-in-the-middle_attack" href="https://en.wikipedia.org/wiki/Kazakhstan_man-in-the-middle_attack">Wikipedia article on Kazakhstan man-in-the-middle attacks</a>, which describes the government&apos;s attempts to require the installation of a government-issued root CA certificate by internet users
 <ul>
-<li>Later on, the Kazakh government unsuccessfully attempted to add the state-issued root CA certificate to Microsoft, Google, Apple and Mozilla root CA stores (in 2019 and again in 2020)</li>
+<li>The Kazakh government later attempted unsuccessfully to add the state-issued root CA certificate to Microsoft, Google, Apple and Mozilla root CA stores (in 2019 and again in 2020)</li>
 <li>Many countries, such as Russia, China, Iran, and others, filter internet traffic in various ways, and the use of certain technologies is banned or restricted</li>
 </ul>
 </li>
@@ -1307,7 +1309,7 @@ Inspecting the content of HTTPS requires an MITM (Man-In-The-Middle) proxy, with
 </ul>
 </li>
 </ul>
-<p><sub class="jop-noMdConv">v 0.0.2 2026-06-12</sub></p>
+<p><sub class="jop-noMdConv">v 0.0.4 2026-07-03</sub></p>
 </div></div>
 					</body>
 				</html>
