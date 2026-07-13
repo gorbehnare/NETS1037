@@ -1081,14 +1081,11 @@ pre.mermaid[data-processed=true] { white-space: unset; }
 <p><sub class="jop-noMdConv">Source: <a data-from-md="" title="https://github.com/zonzorp/NETS1037/blob/main/Presentations/NETS1037-07-ProxyServices.pdf" href="https://github.com/zonzorp/NETS1037/blob/main/Presentations/NETS1037-07-ProxyServices.pdf">https://github.com/zonzorp/NETS1037/blob/main/Presentations/NETS1037-07-ProxyServices.pdf</a></sub><br/>
 A proxy server can be used for several distinct purposes:</p>
 <ul>
-<li>to cache web resources locally for performance or data transfer reduction (basic, most<br/>
-common setup)</li>
+<li>to cache web resources locally for performance or data transfer reduction (basic, most common setup)</li>
 <li>to provide controlled access to protected resources (reverse proxy scenario)</li>
 <li>to conceal the identity of an end-user&apos;s host from the target server (the Tor network uses a network of proxies to hide users)</li>
-<li>to restrict network traffic to specific choke points for traffic measurement and<br/>
-management purposes</li>
-<li>to modify or reroute traffic before delivering it to clients or servers (advanced<br/>
-proxy configurations)</li>
+<li>to restrict network traffic to specific choke points for traffic measurement and management purposes</li>
+<li>to modify or reroute traffic before delivering it to clients or servers (advanced proxy configurations)</li>
 </ul>
 <p><sub class="jop-noMdConv">source: <a data-from-md="" title="https://www.privateproxyguide.com/using-a-proxy-server-to-monitor-and-analyze-outgoing-traffic/" href="https://www.privateproxyguide.com/using-a-proxy-server-to-monitor-and-analyze-outgoing-traffic/">https://www.privateproxyguide.com/using-a-proxy-server-to-monitor-and-analyze-outgoing-traffic/</a></sub><br/>
 Different proxy roles map to different outcomes:</p>
@@ -1271,7 +1268,7 @@ Inspecting the content of HTTPS requires an MITM (Man-In-The-Middle) proxy, with
 <p>It is worth noting that HTTPS can also be intercepted when using a transparent proxy, where a router is involved in forwarding connections. This requires tighter integration between the router and the proxy software since the proxy must be able to observe the <code class="inline-code">TLS ClientHello</code> message after the connection has been redirected, and extract the <code class="inline-code">SNI</code> value before establishing the intercepted TLS session.</p>
 <p>It is also important to note that the HTTPS MITM is generally not possible unless a matching trusted CA certificate is installed on all the clients.</p>
 <h2 id="quic-and-http3-considerations">QUIC and HTTP/3 Considerations</h2>
-<p>Modern web traffic is increasingly using HTTP/3, which operates over <a data-from-md="" title="https://en.wikipedia.org/wiki/QUIC" href="https://en.wikipedia.org/wiki/QUIC">QUIC</a> (UDP port 443) rather than the traditional TCP-based HTTP/1.1 and HTTP/2 protocols. Because many legacy proxy and security monitoring solutions were designed around TCP and TLS interception, HTTP/3 can reduce visibility and complicate traffic inspection, filtering, and logging. Organizations deploying forward proxies often disable or block QUIC at network boundaries, causing clients to fall back to HTTP/2 over TCP, where existing proxy controls and TLS inspection technologies are more mature. As HTTP/3 adoption continues to grow across major web services, proxy administrators should verify that their monitoring, filtering, and security tools explicitly support QUIC and HTTP/3 traffic to avoid visibility gaps and inconsistent policy enforcement.</p>
+<p>Modern web traffic is increasingly using HTTP/3, which operates over <a data-from-md="" title="https://en.wikipedia.org/wiki/QUIC" href="https://en.wikipedia.org/wiki/QUIC">QUIC</a> (UDP port 443, <a data-from-md="" title="https://datatracker.ietf.org/doc/html/rfc9000" href="https://datatracker.ietf.org/doc/html/rfc9000">RFC 9000</a>) rather than the traditional TCP-based HTTP/1.1 and HTTP/2 protocols. Because many legacy proxy and security monitoring solutions were designed around TCP and TLS interception, HTTP/3 can reduce visibility and complicate traffic inspection, filtering, and logging. Organizations deploying forward proxies often disable or block QUIC at network boundaries, causing clients to fall back to HTTP/2 over TCP, where existing proxy controls and TLS inspection technologies are more mature. As HTTP/3 adoption continues to grow across major web services, proxy administrators should verify that their monitoring, filtering, and security tools explicitly support QUIC and HTTP/3 traffic to avoid visibility gaps and inconsistent policy enforcement.</p>
 <h1 id="proxy-uses-and-abuses">Proxy Uses and Abuses</h1>
 <p>We have discussed ethical and legal considerations for logging and monitoring in earlier course content. Proxy servers are extremely useful because they provide application-layer logging and monitoring and support a wide range of security functions, from content filtering to threat detection and response. However, any tool can also be subject to abuse. Here are some (non-comprehensive) considerations when designing systems or deploying proxies:</p>
 <ul>
@@ -1309,7 +1306,7 @@ Inspecting the content of HTTPS requires an MITM (Man-In-The-Middle) proxy, with
 </ul>
 </li>
 </ul>
-<p><sub class="jop-noMdConv">v 0.0.4 2026-07-03</sub></p>
+<p><sub class="jop-noMdConv">v 0.0.5 2026-07-03</sub></p>
 </div></div>
 					</body>
 				</html>
