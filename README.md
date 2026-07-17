@@ -24,4 +24,4 @@
 
 ## Projects:
 - [Project - The ELK Stack](./labs/Project%20-%20The%20ELK%20Stack.html)
-- Project - TBD
+- [Project - Net Filtering](./labs/Project%202%20-%20Network%20Filtering.html)
